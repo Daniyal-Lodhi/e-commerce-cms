@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 
 export const ModalProvider = () => {
     const [isMounted, setIsMounted] = useState(false);
-
+    // use effect will only work when this component runs in client side 
     useEffect(() => {
         setIsMounted(true);
     }, [])

@@ -1,7 +1,6 @@
 'use client'
 
 import { useStoreModal } from "@/hooks/use-store-modal";
-import { Modal } from "../Modal";
 import { useEffect } from "react";
 
 export default function Home() {
@@ -14,9 +13,5 @@ export default function Home() {
     }
   },[isOpen,onOpen]);
   
-  return (
-    <div>
-      
-    </div>
-  );
+  
 }
