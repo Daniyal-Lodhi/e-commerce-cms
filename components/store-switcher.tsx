@@ -23,9 +23,6 @@ interface StoreSwitcherProps extends PopoverTriggerProps {
     items: Store[];
 }
 
-
-
-
 export default function StoreSwitcher({
     className,
     items = []

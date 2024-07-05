@@ -31,7 +31,6 @@ export default async function DashboardLayout({ children,params }: {
     return(
         <>
         <Navbar />
-        {"current store: "+store?.name}
         {children}
         </>
     )
