@@ -29,6 +29,7 @@ export default async function RootLayout({
 
   return (
    <>
+   layout for root group
    {children}
    </>
   );

@@ -35,7 +35,6 @@ const settingPage : React.FC<settingsPageProps> = async ({
         <div className="flex-col">
             <div className="flex-1 p-8 pt-6 space-y-4">
                 <SettingsFormPage initialData={store} />
-                
 
             </div>
             
