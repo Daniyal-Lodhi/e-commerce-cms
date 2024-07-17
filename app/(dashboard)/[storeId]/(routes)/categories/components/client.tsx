@@ -4,17 +4,17 @@ import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/heading";
 import { Plus } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
-import { BillboardColumn, billboardColumns } from "./columns";
+import { CategoryColumn, categoryColumns } from "./columns";
 import { DataTable } from "@/components/ui/data-table";
 import { Separator } from "@/components/ui/separator";
 import { ApiList } from "./api-lists";
 
-interface BillboardClientProps {
-    data: BillboardColumn[]
+interface CategoryClientProps {
+    data: CategoryColumn[]
 }
 
 
-export const BillboardClient: React.FC<BillboardClientProps> = ({
+export const CategoryClient: React.FC<CategoryClientProps> = ({
     data
 }) => {
 
@@ -25,11 +25,11 @@ export const BillboardClient: React.FC<BillboardClientProps> = ({
         <>
             <div className="flex items-center justify-between">
                 <Heading
-                    title={`Billboards (${data.length})`}
-                    description={'Manage billboards for your store'}
+                    title={`Categories (${data.length})`}
+                    description={'Manage categories for your store'}
                 />
 
-                <Button className="text-sm" onClick={() => router.push(`/${params.storeId}/billboards/new`)} >
+                <Button className="text-sm" onClick={() => router.push(`/${params.storeId}/categories/new`)} >
                     <Plus className="w-4 h-4 mr-2 " />
                     Add new
                 </Button>
@@ -37,21 +37,21 @@ export const BillboardClient: React.FC<BillboardClientProps> = ({
             </div>
             <Separator />
             <DataTable
-            searchKey={'label'}
+                searchKey={'name'}
                 data={data}
-                columns={billboardColumns}
+                columns={categoryColumns}
             />
-            <Heading 
-            title={'API'}
-            description={'API calls for billboards.'}
+            <Heading
+                title={'API'}
+                description={'API calls for billboards.'}
             />
             <Separator />
             <ApiList
-            routeName="billboards"
-            routeId="{BillboardId}"
+                routeName="Categories"
+                routeId="{CategoryId}"
             />
         </>
     )
 }
 
-export default BillboardClient;
+export default CategoryClient;

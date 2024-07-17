@@ -18,6 +18,7 @@ import { Command, CommandEmpty, CommandInput, CommandList, CommandGroup, Command
 
 
 type PopoverTriggerProps = React.ComponentPropsWithoutRef<typeof PopoverTrigger> // A way to generate type
+// includes all the native html element props for PopOver trigger type
 
 interface StoreSwitcherProps extends PopoverTriggerProps {
     items: Store[];
@@ -25,6 +26,7 @@ interface StoreSwitcherProps extends PopoverTriggerProps {
 
 export default function StoreSwitcher({
     className,
+
     items = []
 }: StoreSwitcherProps) {
 

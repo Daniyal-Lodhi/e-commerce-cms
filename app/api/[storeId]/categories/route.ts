@@ -10,7 +10,7 @@ export async function POST(req:Request,
 ){
     const {userId} = auth() ;
     const body = await req.json() ;
-    const { imageUrl, label } = body ;
+    const { name, billboardId } = body ;
     try {
         if(!userId){
             return new NextResponse("Unauthenticated" , {status:401})
@@ -18,11 +18,11 @@ export async function POST(req:Request,
         if(!params.storeId){
             return new NextResponse("Store id is required" , {status:400})
         }
-        if(!imageUrl){
-            return new NextResponse("image url is required" , {status:400})
+        if(!name){
+            return new NextResponse("Category name is required" , {status:400})
         }
-        if(!label){
-            return new NextResponse("label is required" , {status:400})
+        if(!billboardId){
+            return new NextResponse("Billboard id is required" , {status:400})
         }
         
         const storeByUserId = prismadb.store.findFirst({
@@ -37,18 +37,18 @@ export async function POST(req:Request,
         }
 
 
-        const billboard = await prismadb.billboards.create({
+        const categories = await prismadb.categories.create({
             data:{
                 storeId:params.storeId,
-                label,
-                imageUrl
+                billboardId,
+                name
             } 
         })
 
-        return NextResponse.json(billboard,{status:200}) ;
+        return NextResponse.json(categories,{status:200}) ;
         
     } catch (error) {
-        console.log('[BILLBOARDS_POST:]',error) ;
+        console.log('[CATEGORIES_POST:]',error) ;
         return new NextResponse("Internal server error" , {status:500})
     }
 }
@@ -60,25 +60,22 @@ export async function GET(req:Request,
         params:{storeId:string}
     }
 ){
-    const {userId} = auth() ;
     try {
         
         if(!params.storeId){
             return new NextResponse("Store id is required" , {status:400})
         }
-       
 
-
-        const billboards = await prismadb.billboards.findMany({
+        const categories = await prismadb.categories.findMany({
             where:{
                 storeId:params.storeId
             }
         })
 
-        return NextResponse.json(billboards,{status:200}) ;
+        return NextResponse.json(categories,{status:200}) ;
         
     } catch (error) {
-        console.log('[BILLBOARDS_GET:]',error) ;
+        console.log('[CATEGORIES_GET:]',error) ;
         return new NextResponse("Internal server error" , {status:500})
     }
 }

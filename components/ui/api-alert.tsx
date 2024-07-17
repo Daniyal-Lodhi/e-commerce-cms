@@ -17,12 +17,12 @@ interface ApiAlertProps {
 
 const textMap: Record<ApiAlertProps['variant'], string> = {
     public: 'Public',
-    admin: 'Admin'
+    admin: 'Admin',
 };
 
 const variantMap: Record<ApiAlertProps['variant'], BadgeProps['variant']> = {
+    admin: 'destructive',
     public: "secondary",
-    admin: 'destructive'
 }
 
 export const ApiAlert: React.FC<ApiAlertProps> = ({

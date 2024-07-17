@@ -25,6 +25,16 @@ export const PATCH = async (
         if (!params.storeId) {
             return new NextResponse("Store id is required", { status: 400 });
         }
+        
+        const storeByUserId = await prismadb.store.findFirst({
+            where: {
+                id: "params.storeId",
+                userId
+            }
+        })
+        if (!storeByUserId) {
+            return new NextResponse("You are not Authorized for make changes in this store", { status: 403 });
+        }
 
 
         const store = await prismadb.store.updateMany({
@@ -58,6 +68,15 @@ export const DELETE = async (
         }
         if (!params.storeId) {
             return new NextResponse("Store id is required", { status: 400 });
+        }
+        const storeByUserId = await prismadb.store.findFirst({
+            where: {
+                id: "params.storeId",
+                userId
+            }
+        })
+        if (!storeByUserId) {
+            return new NextResponse("You are not Authorized for make changes in this store", { status: 403 });
         }
 
 

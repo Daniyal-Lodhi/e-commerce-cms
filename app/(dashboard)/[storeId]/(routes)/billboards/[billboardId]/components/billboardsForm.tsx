@@ -67,8 +67,8 @@ export const BillboardFormPage: React.FC<BillboardFormProps> = ({
             }
             console.log(res.data)
             router.refresh(); // syncs changes in the router by refreshing it, as in this case synced the name of store after update.
-            router.push(`/${params.storeId}/billboards`)
             toast.success(toastMessage)
+            router.push(`/${params.storeId}/billboards`)
         } catch (error) {
             toast.error("Something went wrong.")
             console.log(error)
