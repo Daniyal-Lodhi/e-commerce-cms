@@ -18,12 +18,13 @@ export const billboardColumns: ColumnDef<BillboardColumn>[] = [
     header: "Label",
   },
  
-  {
-      id:'actions',
-      cell: ({row})=><BillboardCellAction data={row.original} />
-  },
+
   {
     accessorKey: "createdAt",
     header: "Date",
   },
+  {
+    id:'actions',
+    cell: ({row})=><BillboardCellAction data={row.original} />
+},
 ]

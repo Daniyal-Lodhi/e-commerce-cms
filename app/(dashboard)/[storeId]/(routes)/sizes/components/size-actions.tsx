@@ -1,6 +1,6 @@
 'use client'
 
-import { CategoryColumn } from "./columns"
+import { SizeColumn } from "./columns"
 
 import { useState } from 'react'
 
@@ -22,12 +22,12 @@ import axios from "axios"
 import AlertModal from "@/components/Modals/alert-modal"
 
 
-interface CategoryCellActionProps {
-    data: CategoryColumn
+interface SizeCellActionProps {
+    data: SizeColumn
 }
 
 
-export const CategoryCellAction: React.FC<CategoryCellActionProps> = ({ data }) => {
+export const SizeCellAction: React.FC<SizeCellActionProps> = ({ data }) => {
 
     const router = useRouter();
     const params = useParams();
@@ -36,19 +36,18 @@ export const CategoryCellAction: React.FC<CategoryCellActionProps> = ({ data }) 
 
     const onCopy = (id: string) => {
         navigator.clipboard.writeText(id)
-        toast.success('Category id copied to the clipboard.')
+        toast.success('Size id copied to the clipboard.')
     }
 
     const onDelete = async () => {
         setLoading(true);
         try {
-            await axios.delete(`/api/${params.storeId}/categories/${data.id}`);
+            await axios.delete(`/api/${params.storeId}/sizes/${data.id}`);
             router.refresh();
-            // router.push(`/${params.storeId}/billboards`);
-            toast.success("Category deleted successfully")
+            toast.success("Size deleted successfully")
         } catch (error) {
             console.log(error);
-            toast.error('Make sure you delete all the products and categories using this billboard')
+            toast.error('Make sure you delete all the products and categories using this size')
         } finally {
             setTimeout(() => {
                 document.body.style.pointerEvents = 'auto';
@@ -84,7 +83,7 @@ export const CategoryCellAction: React.FC<CategoryCellActionProps> = ({ data }) 
                 <DropdownMenuContent align="end">
                     <DropdownMenuLabel>Actions</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={() => router.push(`/${params.storeId}/categories/${data.id}`)} >
+                    <DropdownMenuItem onClick={() => router.push(`/${params.storeId}/sizes/${data.id}`)} >
                         <Edit className="h-4 w-4 mr-2" />
                         edit
                     </DropdownMenuItem>

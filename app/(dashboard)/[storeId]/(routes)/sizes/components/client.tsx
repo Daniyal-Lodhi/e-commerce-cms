@@ -4,17 +4,17 @@ import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/heading";
 import { Plus } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
-import { BillboardColumn, billboardColumns } from "./columns";
+import { SizeColumn, SizeColumns } from "./columns";
 import { DataTable } from "@/components/ui/data-table";
 import { Separator } from "@/components/ui/separator";
 import { ApiList } from "./api-lists";
 
-interface BillboardClientProps {
-    data: BillboardColumn[]
+interface SizeClientProps { 
+    data: SizeColumn[]
 }
 
 
-export const BillboardClient: React.FC<BillboardClientProps> = ({
+export const SizeClient: React.FC<SizeClientProps> = ({
     data
 }) => {
 
@@ -25,11 +25,11 @@ export const BillboardClient: React.FC<BillboardClientProps> = ({
         <>
             <div className="flex items-center justify-between">
                 <Heading
-                    title={`Billboards (${data.length})`}
-                    description={'Manage billboards for your store'}
+                    title={`Size (${data.length})`}
+                    description={'Manage sizes for your store'}
                 />
 
-                <Button className="text-sm" onClick={() => router.push(`/${params.storeId}/billboards/new`)} >
+                <Button className="text-sm" onClick={() => router.push(`/${params.storeId}/sizes/new`)} >
                     <Plus className="w-4 h-4 mr-2 " />
                     Add new
                 </Button>
@@ -37,21 +37,21 @@ export const BillboardClient: React.FC<BillboardClientProps> = ({
             </div>
             <Separator />
             <DataTable
-            searchKey={'label'}
+            searchKey={'name'}
                 data={data}
-                columns={billboardColumns}
+                columns={SizeColumns}
             />
             <Heading 
             title={'API'}
-            description={'API calls for billboards.'}
-            /> 
+            description={'API calls for sizes.'}
+            />
             <Separator />
             <ApiList
-            routeName="billboards"
-            routeId="{BillboardId}"
+            routeName="Size"
+            routeId="{SizeId}"
             />
         </>
     )
 }
 
-export default BillboardClient;
+export default SizeClient;

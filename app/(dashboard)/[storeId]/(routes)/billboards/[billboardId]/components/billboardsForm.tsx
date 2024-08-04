@@ -45,7 +45,7 @@ export const BillboardFormPage: React.FC<BillboardFormProps> = ({
     const action = initialData ? "Save changes" : "Create Billboard";
 
     const form = useForm<BillboardFormZ>({
-        resolver: zodResolver(BillboardSchema),
+        resolver: zodResolver(BillboardSchema), 
         defaultValues: {
             label: initialData?.label || '',
             imageUrl: initialData?.imageUrl || ''
@@ -66,9 +66,9 @@ export const BillboardFormPage: React.FC<BillboardFormProps> = ({
                 res = await axios.post(`/api/${params.storeId}/billboards`, data)
             }
             console.log(res.data)
-            router.refresh(); // syncs changes in the router by refreshing it, as in this case synced the name of store after update.
             toast.success(toastMessage)
             router.push(`/${params.storeId}/billboards`)
+            router.refresh(); // syncs changes in the router by refreshing it, as in this case synced the name of store after update.
         } catch (error) {
             toast.error("Something went wrong.")
             console.log(error)
@@ -81,8 +81,9 @@ export const BillboardFormPage: React.FC<BillboardFormProps> = ({
         try {
             setLoading(true);
             await axios.delete(`/api/${params.storeId}/billboards/${params.billboardId}`);
+            toast.success('Billboard deleted')
+            router.replace(`/${params.storeId}/billboards`)
             router.refresh();
-            toast.success(toastMessage)
         } catch (error) {
             toast.error('Make sure you delete all the products and categories using this billboard')
         }

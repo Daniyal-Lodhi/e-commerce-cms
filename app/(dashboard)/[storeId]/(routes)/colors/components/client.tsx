@@ -4,17 +4,17 @@ import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/heading";
 import { Plus } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
-import { BillboardColumn, billboardColumns } from "./columns";
+import { ColorColumn, ColorColumns } from "./columns";
 import { DataTable } from "@/components/ui/data-table";
 import { Separator } from "@/components/ui/separator";
 import { ApiList } from "./api-lists";
 
-interface BillboardClientProps {
-    data: BillboardColumn[]
+interface ColorClientProps { 
+    data: ColorColumn[]
 }
 
 
-export const BillboardClient: React.FC<BillboardClientProps> = ({
+export const ColorClient: React.FC<ColorClientProps> = ({
     data
 }) => {
 
@@ -25,11 +25,11 @@ export const BillboardClient: React.FC<BillboardClientProps> = ({
         <>
             <div className="flex items-center justify-between">
                 <Heading
-                    title={`Billboards (${data.length})`}
-                    description={'Manage billboards for your store'}
+                    title={`Color (${data.length})`}
+                    description={'Manage colors for your store'}
                 />
 
-                <Button className="text-sm" onClick={() => router.push(`/${params.storeId}/billboards/new`)} >
+                <Button className="text-sm" onClick={() => router.push(`/${params.storeId}/colors/new`)} >
                     <Plus className="w-4 h-4 mr-2 " />
                     Add new
                 </Button>
@@ -37,21 +37,21 @@ export const BillboardClient: React.FC<BillboardClientProps> = ({
             </div>
             <Separator />
             <DataTable
-            searchKey={'label'}
+            searchKey={'name'}
                 data={data}
-                columns={billboardColumns}
+                columns={ColorColumns}
             />
             <Heading 
             title={'API'}
-            description={'API calls for billboards.'}
-            /> 
+            description={'API calls for colors.'}
+            />
             <Separator />
             <ApiList
-            routeName="billboards"
-            routeId="{BillboardId}"
+            routeName="Color"
+            routeId="{ColorId}"
             />
         </>
     )
 }
 
-export default BillboardClient;
+export default ColorClient;

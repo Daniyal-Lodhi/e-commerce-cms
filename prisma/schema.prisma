@@ -1,48 +1,70 @@
-
 generator client {
-  provider = "prisma-client-js"  
+  provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
   relationMode = "prisma"
 }
 
 model Store {
-  id         String    @id @default(uuid())
+  id         String       @id @default(uuid())
   name       String
   userId     String
-  createdAt  DateTime      @default(now())
-  updatedAt  DateTime      @default(now())
-  billboards  Billboards[] @relation("StoreToBillboards")
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @default(now())
+  billboards Billboards[] @relation("StoreToBillboards")
   categories Categories[] @relation("StoreToCategories")
+  size       Size[]       @relation("StoreToSize")
+  color      Color[]      @relation("StoreToColor")
 }
 
 model Billboards {
-  id  String  @id @default(uuid())
-  storeId String
-  store Store @relation("StoreToBillboards",fields: [storeId],references: [id])
-  label String
-  imageUrl  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         String       @id @default(uuid())
+  storeId    String
+  store      Store        @relation("StoreToBillboards", fields: [storeId], references: [id])
+  label      String
+  imageUrl   String
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
   categories Categories[] @relation("BillboardToCategories")
-  @@index([storeId])
 
+  @@index([storeId])
 }
 
 model Categories {
-  id String @id @default(uuid())
-  storeId String 
-  store Store @relation("StoreToCategories", fields: [storeId], references: [id]) 
+  id          String     @id @default(uuid())
+  storeId     String
+  store       Store      @relation("StoreToCategories", fields: [storeId], references: [id])
   billboardId String
-  billboard Billboards @relation("BillboardToCategories",fields: [billboardId],references: [id])
-  name String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  billboard   Billboards @relation("BillboardToCategories", fields: [billboardId], references: [id])
+  name        String
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
 
   @@index([storeId])
   @@index([billboardId])
-  
+}
+
+model Size {
+  id        String   @id @default(uuid())
+  value     String
+  name      String
+  storeId   String
+  store     Store    @relation("StoreToSize", fields: [storeId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  @@index([storeId])
+}
+
+model Color {
+  id      String @id @default(uuid())
+  name    String
+  value   String
+  storeId String
+  store   Store  @relation("StoreToColor", fields: [storeId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
 }
