@@ -32,13 +32,19 @@ const MainNav = ({
         },
         {
             href:`/${params.storeId}/sizes`,
-            label : 'Size',
+            label : 'Sizes',
             active: pathname == `/${params.storeId}/sizes`
         },
         {
             href:`/${params.storeId}/colors`,
-            label : 'Color',
+            label : 'Colors',
             active: pathname == `/${params.storeId}/colors`
+        },
+        
+        {
+            href:`/${params.storeId}/products`,
+            label : 'Products',
+            active: pathname == `/${params.storeId}/products`
         },
         {
             href:`/${params.storeId}/settings`,
