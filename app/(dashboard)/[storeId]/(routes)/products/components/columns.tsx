@@ -1,7 +1,7 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
-import { ProductCellAction } from "./billboard-actions"
+import { ProductCellAction } from "./product-actions"
 import { Image } from "@prisma/client"
 
 // This type is used to define the shape of our data.
@@ -14,6 +14,9 @@ export type ProductColumn = {
   size: string
   color: string
   createdAt: string
+  isFeatured : boolean
+  isArchived : boolean
+  colorValue:string
 
 }
 
@@ -25,8 +28,17 @@ export const productColumns: ColumnDef<ProductColumn>[] = [
     header: "Name",
   },
   {
+    accessorKey: "isFeatured",
+    header: "Featured",
+  },
+  {
+    accessorKey: "isArchived",
+    header: "Archived",
+  },
+  {
     accessorKey: "price",
     header: "Price",
+    cell:({row})=> (row.original.price+ " Rps")
   },
   {
     accessorKey: "category",
@@ -35,6 +47,14 @@ export const productColumns: ColumnDef<ProductColumn>[] = [
   {
     accessorKey: "color",
     header: "Color",
+    cell: ({ row }) => ( 
+      <div className="flex flex-row w-auto items-center  ">
+        {row.original.color}
+        <div className='h-6 w-6 rounded-md ml-2'
+          style={{ backgroundColor: row.original.colorValue }}
+        />
+      </div>
+    )
   },
   {
     accessorKey: "size",

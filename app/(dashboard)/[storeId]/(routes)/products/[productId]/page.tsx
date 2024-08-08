@@ -1,5 +1,5 @@
 
-import ProductFormPage from "./components/productsForm"
+import ProductFormPage from "./components/productsForm";
 import prismadb from "@/lib/prismadb";
 
 const ProductPage = async ({params}:{
@@ -14,7 +14,7 @@ const ProductPage = async ({params}:{
             images:true ,
         }
     })
-
+   const productJson = JSON.parse(JSON.stringify(product)) ;
     const categories = await prismadb.categories.findMany({
         where:{
             storeId:params.storeId
@@ -39,7 +39,7 @@ const ProductPage = async ({params}:{
         <div className="flex-col">
             <div className="flex-1 p-8 pt-6 space-y-4" >
             <ProductFormPage
-                initialData={product}
+                initialData={productJson}
                 category = {categories}
                 size = {sizes}
                 color = {colors}

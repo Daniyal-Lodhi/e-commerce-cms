@@ -28,7 +28,7 @@ const UploadImage:React.FC<UploadImageProps> = ({
 
     const onUpload = (result:any)=>{
         onChange(result.info.secure_url) ;
-        // console.log(result)
+        // console.log(result.info.secure_url   )
     }
 
 
@@ -56,6 +56,7 @@ const UploadImage:React.FC<UploadImageProps> = ({
                            
                         </div>
                         <Image 
+            
                             src={url}
                             className="object-cover"
                             alt="Upload image"

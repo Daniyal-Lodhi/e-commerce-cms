@@ -11,7 +11,7 @@ import { ApiList } from "./api-lists";
 import { Categories, Image, Size ,Color } from "@prisma/client";
 
 interface ProductClientProps {
-    data: ProductColumn[]
+    data: ProductColumn[] 
 }
 
 

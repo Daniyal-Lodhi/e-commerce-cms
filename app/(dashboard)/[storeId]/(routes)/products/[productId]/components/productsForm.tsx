@@ -22,22 +22,21 @@ import { Checkbox } from '@/components/ui/checkbox'
 
 
 interface ProductFormProps {
-    initialData: Product & {
+    initialData: Product & { price: number } & {
         images: Image[]
     } | null;
-    size: Size[],
-    category: Categories[],
+    size: Size[];
+    category: Categories[];
     color: Color[]
 }
 
 const ProductSchema = z.object({
-    name: z.string().min(1),
+    name: z.string().min(1, { message: "Name is required" }),
     price: z.coerce.number().min(1),
-    images: z.object({ imageUrl: z.string() }).array(),
-    sizeId: z.string().min(1),
-    categoryId: z.string().min(1),
-    productId: z.string().min(1),
-    colorId: z.string().min(1),
+    images: z.object({ imageUrl: z.string() }).array().min(1, { message: "Image is required" }),
+    sizeId: z.string().min(1, { message: "Size is required" }),
+    categoryId: z.string().min(1, { message: "Category is required" }),
+    colorId: z.string().min(1, { message: "Color is required" }),
     isFeatured: z.boolean().default(false).optional(),
     isArchived: z.boolean().default(false).optional(),
 });
@@ -54,29 +53,25 @@ export const ProductFormPage: React.FC<ProductFormProps> = ({
 
     const title = initialData ? "Edit Product" : "Create Product";
     const description = initialData ? "Edit a Product" : "Add a new Product";
-    const toastMessage = initialData ? "Product updated" : "Billboard Product";
+    const toastMessage = initialData ? "Product updated" : "Product updated";
     const action = initialData ? "Save changes" : "Create Product";
-
+    const initialImageArray: { imageUrl: string }[] = [];
     const form = useForm<ProductFormZ>({
         resolver: zodResolver(ProductSchema),
-        defaultValues: initialData ? {
-            ...initialData,
-            price: parseFloat(String(initialData?.price))
-        } : {
+        defaultValues: initialData ? initialData : {
             name: "",
-            images: [],
+            images: initialImageArray,
             categoryId: "",
             colorId: "",
             sizeId: "",
             isFeatured: false,
             isArchived: false,
-            price: 0
+            price: 0,
         }
     })
 
     const onSubmit = async (data: ProductFormZ) => {
-
-        setLoading(true);
+        console.log(data)
         try {
             var res;
             if (initialData) {
@@ -140,13 +135,14 @@ export const ProductFormPage: React.FC<ProductFormProps> = ({
             <Form {...form} >
                 <form onSubmit={form.handleSubmit(onSubmit)} className='w-full space-y-8' >
                     <FormField
+                    
                         control={form.control}
                         name='images'
                         render={({ field }) => (
-                            <FormItem>
+                            <FormItem >
                                 <div>{field.value.length}</div>
                                 <FormLabel>Product image</FormLabel>
-                                <FormControl>
+                                <FormControl >
                                     <UploadImage
                                         value={field.value.map((image) => image.imageUrl)}
                                         disabled={loading}
@@ -161,6 +157,7 @@ export const ProductFormPage: React.FC<ProductFormProps> = ({
 
                     <div className='grid grid-cols-3 gap-8'>
                         <FormField
+                            disabled={loading}
                             name='name'
                             control={form.control}
                             render={({ field }) => (
@@ -175,6 +172,8 @@ export const ProductFormPage: React.FC<ProductFormProps> = ({
                         >
                         </FormField>
                         <FormField
+                            disabled={loading}
+
                             name='price'
                             control={form.control}
                             render={({ field }) => (
@@ -189,11 +188,13 @@ export const ProductFormPage: React.FC<ProductFormProps> = ({
                         >
                         </FormField>
                         <FormField
+                            disabled={loading}
+
                             name='categoryId'
                             control={form.control}
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Price</FormLabel>
+                                    <FormLabel>Category</FormLabel>
                                     <Select
                                         disabled={loading}
                                         onValueChange={field.onChange}
@@ -224,6 +225,8 @@ export const ProductFormPage: React.FC<ProductFormProps> = ({
 
                     <div className='grid grid-cols-3 gap-8' >
                         <FormField
+                            disabled={loading}
+
                             name='sizeId'
                             control={form.control}
                             render={({ field }) => (
@@ -255,6 +258,8 @@ export const ProductFormPage: React.FC<ProductFormProps> = ({
                         >
                         </FormField>
                         <FormField
+                            disabled={loading}
+
                             name='colorId'
                             control={form.control}
                             render={({ field }) => (
@@ -290,6 +295,8 @@ export const ProductFormPage: React.FC<ProductFormProps> = ({
                         >
                         </FormField>
                         <FormField
+                            disabled={loading}
+
                             name='isFeatured'
                             control={form.control}
                             render={({ field }) => (
@@ -319,6 +326,8 @@ export const ProductFormPage: React.FC<ProductFormProps> = ({
                     </div>
                     <div className='grid grid-cols-3 gap-8'>
                         <FormField
+                            disabled={loading}
+
                             name='isArchived'
                             control={form.control}
                             render={({ field }) => (

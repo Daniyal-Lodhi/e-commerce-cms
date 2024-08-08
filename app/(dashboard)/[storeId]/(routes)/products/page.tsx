@@ -27,11 +27,12 @@ export const ProductsPage = async (
         return {
             id: product.id,
             name: product.name,
-            price: product.price.toNumber(),
+            price: product.price.toNumber() ,
             isArchived: product.isArchived,
             isFeatured: product.isFeatured,
             size: product.size.name,
             color: product.color.name,
+            colorValue:product.color.value,
             category: product.category.name,
             createdAt: format(new Date(product.createdAt), 'MMMM d,yyyy'),
         }

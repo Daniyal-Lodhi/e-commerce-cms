@@ -25,6 +25,7 @@ export const GET = async (req: Request,
             }
         })
 
+
         return NextResponse.json(product, { status: 200 });
     } catch (error) {
         console.log("[PRODUCT_GET]", error);
@@ -45,7 +46,6 @@ export const PATCH = async (
             price,
             isFeatured,
             isArchived,
-            billboardId,
             categoryId,
             colorId,
             sizeId,
@@ -63,7 +63,7 @@ export const PATCH = async (
             return new NextResponse("Store id is required", { status: 400 })
         }
         if (!images || !images.length) {
-            return new NextResponse("Images is required", { status: 400 })
+            return new NextResponse("Atleast one image is required", { status: 400 })
         }
         if (!name) {
             return new NextResponse("Name is required", { status: 400 })
@@ -80,9 +80,9 @@ export const PATCH = async (
         if (!categoryId) {
             return new NextResponse("Category id is required", { status: 400 })
         }
-        if (!billboardId) {
-            return new NextResponse("Billboard id is required", { status: 400 })
-        }
+        // if (!billboardId) {
+        //     return new NextResponse("Billboard id is required", { status: 400 })
+        // }
 
 
 
@@ -107,7 +107,7 @@ export const PATCH = async (
                 price,
                 isFeatured,
                 isArchived,
-                billboardId,
+                // billboardId,
                 categoryId,
                 colorId,
                 sizeId,

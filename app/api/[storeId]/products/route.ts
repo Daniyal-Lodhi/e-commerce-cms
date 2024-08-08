@@ -1,8 +1,9 @@
 import prismadb from "@/lib/prismadb";
 import { auth } from "@clerk/nextjs/server";
+import { error } from "console";
 import { useSearchParams } from "next/navigation";
 import { NextResponse } from "next/server";
-import { string } from "zod";
+import { boolean, string } from "zod";
 
 
 export async function POST(req: Request,
@@ -11,13 +12,14 @@ export async function POST(req: Request,
     }
 ) {
     const { userId } = auth();
+    console.log(userId)
     const body = await req.json();
     const {
         name,
         price,
         isFeatured,
         isArchived,
-        billboardId,
+        // billboardId,
         categoryId,
         colorId,
         sizeId,
@@ -31,7 +33,7 @@ export async function POST(req: Request,
             return new NextResponse("Store id is required", { status: 400 })
         }
         if (!images || !images.length) {
-            return new NextResponse("Images is required", { status: 400 })
+            return new NextResponse("Atleast one image is required", { status: 400 })
         }
         if (!name) {
             return new NextResponse("Name is required", { status: 400 })
@@ -48,9 +50,9 @@ export async function POST(req: Request,
         if (!categoryId) {
             return new NextResponse("Category id is required", { status: 400 })
         }
-        if (!billboardId) {
-            return new NextResponse("Billboard id is required", { status: 400 })
-        }
+        // if (!billboardId) {
+        //     return new NextResponse("Billboard id is required", { status: 400 })
+        // }
 
 
         const storeByUserId = prismadb.store.findFirst({
@@ -72,7 +74,6 @@ export async function POST(req: Request,
                 price,
                 isFeatured,
                 isArchived,
-                billboardId,
                 categoryId,
                 colorId,
                 sizeId,
@@ -88,9 +89,9 @@ export async function POST(req: Request,
 
         return NextResponse.json(product, { status: 200 });
 
-    } catch (error) {
+    } catch (error:any) {
         console.log('[PRODUCT_POST:]', error);
-        return new NextResponse("Internal server error", { status: 500 })
+        return Response.json(error.message,{status:500})
     }
 }
 
@@ -106,7 +107,7 @@ export async function GET(req: Request,
         const categoryId = searchParams.get('categoryId') || undefined ;
         const colorId = searchParams.get('colorId') || undefined ;
         const sizeId = searchParams.get('sizeId') || undefined ;
-        const isFeatured = searchParams.get('isFeatured')  ;
+        const  isFeatured = Boolean(searchParams.get('isFeatured'))    ;
 
 
         if (!params.storeId) {

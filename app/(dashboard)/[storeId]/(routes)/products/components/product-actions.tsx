@@ -36,19 +36,18 @@ export const ProductCellAction: React.FC<ProductCellActionProps> = ({ data }) =>
 
     const onCopy = (id: string) => {
         navigator.clipboard.writeText(id)
-        toast.success('Billboard id copied to the clipboard.')
+        toast.success('Product id copied to the clipboard.')
     }
 
     const onDelete = async () => {
         setLoading(true);
         try {
-            await axios.delete(`/api/${params.storeId}/billboards/${data.id}`);
+            await axios.delete(`/api/${params.storeId}/products/${data.id}`);
             router.refresh();
-            // router.push(`/${params.storeId}/billboards`);
-            toast.success("Billboard deleted successfully")
+            toast.success("Product deleted successfully")
         } catch (error) {
             console.log(error);
-            toast.error('Make sure you delete all the products and categories using this billboard')
+            // toast.error('Make sure you delete all the products and categories using this billboard')
         } finally {
             setTimeout(() => {
                 document.body.style.pointerEvents = 'auto';
@@ -84,7 +83,7 @@ export const ProductCellAction: React.FC<ProductCellActionProps> = ({ data }) =>
                 <DropdownMenuContent align="end">
                     <DropdownMenuLabel>Actions</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={() => router.push(`/${params.storeId}/billboards/${data.id}`)} >
+                    <DropdownMenuItem onClick={() => router.push(`/${params.storeId}/products/${data.id}`)} >
                         <Edit className="h-4 w-4 mr-2" />
                         edit
                     </DropdownMenuItem>
