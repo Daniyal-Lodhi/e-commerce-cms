@@ -1,9 +1,6 @@
 import prismadb from "@/lib/prismadb";
 import { auth } from "@clerk/nextjs/server";
-import { error } from "console";
-import { useSearchParams } from "next/navigation";
 import { NextResponse } from "next/server";
-import { boolean, string } from "zod";
 
 
 export async function POST(req: Request,
@@ -19,11 +16,11 @@ export async function POST(req: Request,
         price,
         isFeatured,
         isArchived,
-        // billboardId,
         categoryId,
         colorId,
         sizeId,
         images,
+        quantity,
     } = body;
     try {
         if (!userId) {
@@ -41,6 +38,9 @@ export async function POST(req: Request,
         if (!price) {
             return new NextResponse("Price is required", { status: 400 })
         }
+        if (!quantity) {
+            return new NextResponse("Quantity is required", { status: 400 })
+        }
         if (!colorId) {
             return new NextResponse("Color id is required", { status: 400 })
         }
@@ -50,9 +50,6 @@ export async function POST(req: Request,
         if (!categoryId) {
             return new NextResponse("Category id is required", { status: 400 })
         }
-        // if (!billboardId) {
-        //     return new NextResponse("Billboard id is required", { status: 400 })
-        // }
 
 
         const storeByUserId = prismadb.store.findFirst({
@@ -72,6 +69,7 @@ export async function POST(req: Request,
                 storeId: params.storeId,
                 name,
                 price,
+                quantity,
                 isFeatured,
                 isArchived,
                 categoryId,
@@ -103,6 +101,7 @@ export async function GET(req: Request,
     }
 ) {
     try {
+        // destructuring search params from req.url
         const { searchParams } = new URL(req.url) ;
         const categoryId = searchParams.get('categoryId') || undefined ;
         const colorId = searchParams.get('colorId') || undefined ;
@@ -122,7 +121,8 @@ export async function GET(req: Request,
                 sizeId,
                 categoryId,
                 colorId,
-                isFeatured : isFeatured ? isFeatured : undefined 
+                isFeatured : isFeatured ? isFeatured : undefined,
+                isArchived:false
             },
             include:{
                 images: true,

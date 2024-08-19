@@ -28,6 +28,7 @@ export const ProductsPage = async (
             id: product.id,
             name: product.name,
             price: product.price.toNumber() ,
+            quantity: product.quantity.toNumber() ,
             isArchived: product.isArchived,
             isFeatured: product.isFeatured,
             size: product.size.name,
@@ -35,6 +36,7 @@ export const ProductsPage = async (
             colorValue:product.color.value,
             category: product.category.name,
             createdAt: format(new Date(product.createdAt), 'MMMM d,yyyy'),
+
         }
     })
     return (

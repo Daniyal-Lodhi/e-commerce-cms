@@ -1,8 +1,8 @@
-import OrderClient from "./components/client";
 import prismadb from "@/lib/prismadb";
 
 import { format } from "date-fns";
 import { OrderColumn } from "./components/columns";
+import OrderClient from "./components/client";
 
 
 export const OrderPage = async (

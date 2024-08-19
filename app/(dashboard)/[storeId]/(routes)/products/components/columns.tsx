@@ -3,6 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table"
 import { ProductCellAction } from "./product-actions"
 import { Image } from "@prisma/client"
+import Currency from "@/components/currency"
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -17,6 +18,7 @@ export type ProductColumn = {
   isFeatured : boolean
   isArchived : boolean
   colorValue:string
+  quantity:number
 
 }
 
@@ -38,7 +40,7 @@ export const productColumns: ColumnDef<ProductColumn>[] = [
   {
     accessorKey: "price",
     header: "Price",
-    cell:({row})=> (row.original.price+ " Rps")
+    cell:({row})=><Currency  value={row.original.price} />
   },
   {
     accessorKey: "category",
@@ -60,9 +62,12 @@ export const productColumns: ColumnDef<ProductColumn>[] = [
     accessorKey: "size",
     header: "Size",
   },
-
-
-
+  {
+    header: "Quantity",
+    accessorKey: "quantity",
+    cell:({row})=>Number(row.original.quantity)
+  },
+  
   {
     accessorKey: "createdAt",
     header: "Date",

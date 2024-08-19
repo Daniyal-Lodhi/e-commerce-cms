@@ -39,6 +39,7 @@ const ProductSchema = z.object({
     colorId: z.string().min(1, { message: "Color is required" }),
     isFeatured: z.boolean().default(false).optional(),
     isArchived: z.boolean().default(false).optional(),
+    quantity: z.coerce.number().min(1)
 });
 type ProductFormZ = z.infer<typeof ProductSchema>;
 
@@ -58,7 +59,11 @@ export const ProductFormPage: React.FC<ProductFormProps> = ({
     const initialImageArray: { imageUrl: string }[] = [];
     const form = useForm<ProductFormZ>({
         resolver: zodResolver(ProductSchema),
-        defaultValues: initialData ? initialData : {
+        defaultValues: initialData ? {
+            ...initialData
+            ,
+            quantity: Number(initialData.quantity)
+        } : {
             name: "",
             images: initialImageArray,
             categoryId: "",
@@ -67,6 +72,7 @@ export const ProductFormPage: React.FC<ProductFormProps> = ({
             isFeatured: false,
             isArchived: false,
             price: 0,
+            quantity: 1
         }
     })
 
@@ -135,7 +141,7 @@ export const ProductFormPage: React.FC<ProductFormProps> = ({
             <Form {...form} >
                 <form onSubmit={form.handleSubmit(onSubmit)} className='w-full space-y-8' >
                     <FormField
-                    
+
                         control={form.control}
                         name='images'
                         render={({ field }) => (
@@ -296,6 +302,27 @@ export const ProductFormPage: React.FC<ProductFormProps> = ({
                         </FormField>
                         <FormField
                             disabled={loading}
+                            name='quantity'
+                            control={form.control}
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Qunatity</FormLabel>
+                                    <FormControl>
+                                        <Input type='number' disabled={loading} {...field} placeholder='Stock Quantity' />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        >
+
+                        </FormField>
+                        
+
+
+                    </div>
+                    <div className='grid grid-cols-3 gap-8'>
+                    <FormField
+                            disabled={loading}
 
                             name='isFeatured'
                             control={form.control}
@@ -321,10 +348,6 @@ export const ProductFormPage: React.FC<ProductFormProps> = ({
                             )}
                         >
                         </FormField>
-
-
-                    </div>
-                    <div className='grid grid-cols-3 gap-8'>
                         <FormField
                             disabled={loading}
 

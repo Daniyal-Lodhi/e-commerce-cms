@@ -2,6 +2,7 @@
 
 import { ColumnDef } from "@tanstack/react-table"
 import { OrderCellAction } from "./order-actions"
+import Currency from "@/components/currency"
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -34,6 +35,7 @@ export const orderColumns: ColumnDef<OrderColumn>[] = [
   {
     accessorKey: "totalPrice",
     header: "Total Price",
+    cell:({row})=><Currency  value={row.original.totalPrice} />
   },
   {
     accessorKey: "paid",

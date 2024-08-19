@@ -24,7 +24,7 @@ export const ColorColumns: ColumnDef<ColorColumn>[] = [
     cell: ({ row }) => ( 
       <div className="flex flex-row w-auto items-center  ">
         {row.original.value}
-        <div className='h-6 w-6 rounded-md ml-2'
+        <div className='h-6 w-6 rounded-md ml-2 '
           style={{ backgroundColor: row.original.value }}
         />
       </div>

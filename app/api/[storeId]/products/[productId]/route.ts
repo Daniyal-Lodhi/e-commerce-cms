@@ -44,6 +44,7 @@ export const PATCH = async (
         const {
             name,
             price,
+            quantity,
             isFeatured,
             isArchived,
             categoryId,
@@ -68,8 +69,9 @@ export const PATCH = async (
         if (!name) {
             return new NextResponse("Name is required", { status: 400 })
         }
-        if (!price) {
-            return new NextResponse("Price is required", { status: 400 })
+        
+        if (!quantity) {
+            return new NextResponse("Quantity is required", { status: 400 })
         }
         if (!colorId) {
             return new NextResponse("Color id is required", { status: 400 })
@@ -107,7 +109,7 @@ export const PATCH = async (
                 price,
                 isFeatured,
                 isArchived,
-                // billboardId,
+                quantity,
                 categoryId,
                 colorId,
                 sizeId,
