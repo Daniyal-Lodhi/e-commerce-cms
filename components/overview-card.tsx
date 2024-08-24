@@ -1,0 +1,43 @@
+'use client'
+
+import React, { useState } from 'react'
+import { Card, CardHeader, CardTitle, CardContent } from './ui/card'
+import { YearWiseGraphData } from '@/actions/get-graph-revenue'
+import Overview from './overview'
+import { SelectYear } from './ui/select-year'
+
+interface OverviewCardProps {
+    GraphRevenueData: YearWiseGraphData
+}
+
+const OverviewCard: React.FC<OverviewCardProps> = ({
+    GraphRevenueData
+}) => {
+    const dataYears = Object.keys(GraphRevenueData);
+    const LatestYearInData = dataYears[dataYears.length - 1]
+    const [dataYear, setDataYear] = useState(LatestYearInData)
+
+    return (
+        <Card className="col-span-3 mx-2 ">
+            <CardHeader>
+                <CardTitle>
+                    <div className='flex items-center gap-3' >
+                        Overview
+                        <SelectYear 
+                        years={dataYears}
+                        setDataYear={setDataYear}
+                        latestYear={LatestYearInData}
+                        />
+                    </div>
+                </CardTitle>
+
+            </CardHeader>
+            <CardContent className="pl-2">
+                <Overview data={GraphRevenueData}
+                    year={Number(dataYear)} />
+            </CardContent>
+        </Card>
+    )
+}
+
+export default OverviewCard

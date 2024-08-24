@@ -43,6 +43,7 @@ export const PATCH = async (
         const { userId } = auth();
         const {
             name,
+            description,
             price,
             quantity,
             isFeatured,
@@ -70,7 +71,7 @@ export const PATCH = async (
             return new NextResponse("Name is required", { status: 400 })
         }
         
-        if (!quantity) {
+        if (quantity===undefined || quantity == null) {
             return new NextResponse("Quantity is required", { status: 400 })
         }
         if (!colorId) {
@@ -106,6 +107,7 @@ export const PATCH = async (
             },
             data: {
                 name,
+                description,
                 price,
                 isFeatured,
                 isArchived,

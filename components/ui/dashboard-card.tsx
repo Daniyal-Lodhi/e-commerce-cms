@@ -18,7 +18,7 @@ const DashboardCard:React.FC<DashboardCardProps> = ({
 }) => {
   return (
     <div className='p-2 '>
-      <Card>
+      <Card className='h-full' >
         <CardHeader>
             <CardTitle className='flex justify-between items-center font-bold' >
                 <div className='text-sm' >

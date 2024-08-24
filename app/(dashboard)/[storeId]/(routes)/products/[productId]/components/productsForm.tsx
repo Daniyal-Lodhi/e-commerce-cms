@@ -32,6 +32,7 @@ interface ProductFormProps {
 
 const ProductSchema = z.object({
     name: z.string().min(1, { message: "Name is required" }),
+    description: z.string().optional(),
     price: z.coerce.number().min(1),
     images: z.object({ imageUrl: z.string() }).array().min(1, { message: "Image is required" }),
     sizeId: z.string().min(1, { message: "Size is required" }),
@@ -39,7 +40,7 @@ const ProductSchema = z.object({
     colorId: z.string().min(1, { message: "Color is required" }),
     isFeatured: z.boolean().default(false).optional(),
     isArchived: z.boolean().default(false).optional(),
-    quantity: z.coerce.number().min(1)
+    quantity: z.coerce.number().min(0)
 });
 type ProductFormZ = z.infer<typeof ProductSchema>;
 
@@ -60,8 +61,8 @@ export const ProductFormPage: React.FC<ProductFormProps> = ({
     const form = useForm<ProductFormZ>({
         resolver: zodResolver(ProductSchema),
         defaultValues: initialData ? {
-            ...initialData
-            ,
+            ...initialData,
+            description: initialData.description!,
             quantity: Number(initialData.quantity)
         } : {
             name: "",
@@ -72,7 +73,8 @@ export const ProductFormPage: React.FC<ProductFormProps> = ({
             isFeatured: false,
             isArchived: false,
             price: 0,
-            quantity: 1
+            quantity: 1,
+            description: ""
         }
     })
 
@@ -161,6 +163,7 @@ export const ProductFormPage: React.FC<ProductFormProps> = ({
                         )}
                     />
 
+
                     <div className='grid grid-cols-3 gap-8'>
                         <FormField
                             disabled={loading}
@@ -175,8 +178,21 @@ export const ProductFormPage: React.FC<ProductFormProps> = ({
                                     <FormMessage />
                                 </FormItem>
                             )}
-                        >
-                        </FormField>
+                        />
+                        <FormField
+                            disabled={loading}
+                            name='description'
+                            control={form.control}
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Description</FormLabel>
+                                    <FormControl>
+                                        <Input disabled={loading} {...field} placeholder='Product description' />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
                         <FormField
                             disabled={loading}
 
@@ -193,39 +209,7 @@ export const ProductFormPage: React.FC<ProductFormProps> = ({
                             )}
                         >
                         </FormField>
-                        <FormField
-                            disabled={loading}
 
-                            name='categoryId'
-                            control={form.control}
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Category</FormLabel>
-                                    <Select
-                                        disabled={loading}
-                                        onValueChange={field.onChange}
-                                        defaultValue={field.value}
-                                        value={field.value}
-                                    >
-                                        <FormControl>
-                                            <SelectTrigger >
-                                                <SelectValue placeholder="Category" defaultValue={field.value} />
-                                            </SelectTrigger>
-                                        </FormControl>
-                                        <FormMessage />
-
-                                        <SelectContent>
-                                            {category && category.map((category) => (
-                                                <SelectItem key={category.id} value={category.id} >
-                                                    {category.name}
-                                                </SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
-                                </FormItem>
-                            )}
-                        >
-                        </FormField>
 
                     </div>
 
@@ -298,8 +282,45 @@ export const ProductFormPage: React.FC<ProductFormProps> = ({
 
                                 </FormItem>
                             )}
-                        >
-                        </FormField>
+                        />
+                        <FormField
+                            disabled={loading}
+                            name='categoryId'
+                            control={form.control}
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Category</FormLabel>
+                                    <Select
+                                        disabled={loading}
+                                        onValueChange={field.onChange}
+                                        defaultValue={field.value}
+                                        value={field.value}
+                                    >
+                                        <FormControl>
+                                            <SelectTrigger >
+                                                <SelectValue placeholder="Category" defaultValue={field.value} />
+                                            </SelectTrigger>
+                                        </FormControl>
+                                        <FormMessage />
+
+                                        <SelectContent>
+                                            {category && category.map((category) => (
+                                                <SelectItem key={category.id} value={category.id} >
+                                                    {category.name}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                </FormItem>
+                            )}
+                        />
+
+
+
+
+
+                    </div>
+                    <div className='grid grid-cols-3 gap-8'>
                         <FormField
                             disabled={loading}
                             name='quantity'
@@ -313,15 +334,8 @@ export const ProductFormPage: React.FC<ProductFormProps> = ({
                                     <FormMessage />
                                 </FormItem>
                             )}
-                        >
-
-                        </FormField>
-                        
-
-
-                    </div>
-                    <div className='grid grid-cols-3 gap-8'>
-                    <FormField
+                        />
+                        <FormField
                             disabled={loading}
 
                             name='isFeatured'

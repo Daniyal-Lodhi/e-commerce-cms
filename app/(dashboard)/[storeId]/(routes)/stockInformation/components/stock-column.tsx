@@ -20,8 +20,8 @@ export const productColumns: ColumnDef<ProductColumn>[] = [
 
 
     {
+        header: "Product",
         accessorKey: "name",
-        header: "Name",
     },
 
     {

@@ -21,6 +21,7 @@ export async function POST(req: Request,
         sizeId,
         images,
         quantity,
+        description,
     } = body;
     try {
         if (!userId) {
@@ -31,9 +32,6 @@ export async function POST(req: Request,
         }
         if (!images || !images.length) {
             return new NextResponse("Atleast one image is required", { status: 400 })
-        }
-        if (!name) {
-            return new NextResponse("Name is required", { status: 400 })
         }
         if (!price) {
             return new NextResponse("Price is required", { status: 400 })
@@ -68,6 +66,7 @@ export async function POST(req: Request,
             data: {
                 storeId: params.storeId,
                 name,
+                description,
                 price,
                 quantity,
                 isFeatured,
@@ -106,6 +105,7 @@ export async function GET(req: Request,
         const categoryId = searchParams.get('categoryId') || undefined ;
         const colorId = searchParams.get('colorId') || undefined ;
         const sizeId = searchParams.get('sizeId') || undefined ;
+        const quantity = searchParams.get('quantity') || undefined ;
         const  isFeatured = Boolean(searchParams.get('isFeatured'))    ;
 
 
@@ -120,6 +120,7 @@ export async function GET(req: Request,
                 storeId: params.storeId,
                 sizeId,
                 categoryId,
+                quantity,
                 colorId,
                 isFeatured : isFeatured ? isFeatured : undefined,
                 isArchived:false

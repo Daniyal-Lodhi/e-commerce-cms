@@ -31,7 +31,8 @@ export const OrderPage = async (
             totalPrice :  order.orderItems.reduce((totalPrice,currentValue)=>{
                 return totalPrice + Number(currentValue.product.price)
             },0),
-            phoneNumber: order.phoneNumber,
+            phoneNumber: order.phoneNumber || "",
+            completed:order.completed,
             address: order.address,
             paid:order.isPaid ,
             createdAt: format(new Date(order.createdAt),'MMMM d,yyyy')

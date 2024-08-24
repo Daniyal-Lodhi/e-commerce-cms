@@ -80,22 +80,23 @@ model Color {
 }
 
 model Product {
-  id         String       @id @default(uuid())
-  name       String
-  price      Decimal
-  quantity   Decimal
-  storeId    String
-  store      Store        @relation("StoreToProducts", fields: [storeId], references: [id])
-  sizeId     String
-  size       Size         @relation("SizeToProducts", fields: [sizeId], references: [id])
-  categoryId String
-  category   Categories   @relation("CategoryToProducts", fields: [categoryId], references: [id])
-  colorId    String
-  color      Color        @relation("ColorToProducts", fields: [colorId], references: [id])
-  images     Image[]
-  orderItems OrderItems[] @relation("ProductToOrderItems")
-  isArchived Boolean      @default(false)
-  isFeatured Boolean      @default(false)
+  id          String       @id @default(uuid())
+  name        String
+  description String?
+  price       Decimal
+  quantity    Decimal
+  storeId     String
+  store       Store        @relation("StoreToProducts", fields: [storeId], references: [id])
+  sizeId      String
+  size        Size         @relation("SizeToProducts", fields: [sizeId], references: [id])
+  categoryId  String
+  category    Categories   @relation("CategoryToProducts", fields: [categoryId], references: [id])
+  colorId     String
+  color       Color        @relation("ColorToProducts", fields: [colorId], references: [id])
+  images      Image[]
+  orderItems  OrderItems[] @relation("ProductToOrderItems")
+  isArchived  Boolean      @default(false)
+  isFeatured  Boolean      @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
@@ -118,9 +119,12 @@ model Image {
 }
 
 model Order {
-  id          String       @id @default(uuid())
-  storeId     String
-  store       Store        @relation("StoreToOrders", fields: [storeId], references: [id])
+  id        String  @id @default(uuid())
+  storeId   String
+  store     Store   @relation("StoreToOrders", fields: [storeId], references: [id])
+  userId    String
+  completed Boolean @default(false)
+
   phoneNumber String?
   orderItems  OrderItems[] @relation("OrderToOrderItems")
   isPaid      Boolean
@@ -132,7 +136,8 @@ model Order {
 }
 
 model OrderItems {
-  id        String  @id @default(uuid())
+  id String @id @default(uuid())
+
   orderId   String
   order     Order   @relation("OrderToOrderItems", fields: [orderId], references: [id])
   productId String

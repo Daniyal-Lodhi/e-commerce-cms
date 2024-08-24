@@ -4,35 +4,31 @@ import React, { useEffect, useState } from 'react'
 import DashboardCard from './dashboard-card'
 import { Box } from 'lucide-react'
 import { useParams, useRouter } from 'next/navigation'
-import { Button } from './button'
 
 const ViewStockCard = () => {
+  const [isMounted, setIsMounted] = useState(false);
+  const router = useRouter();
+  const params = useParams();
 
-    const [mounted,setMounted] = useState(false);
-    
-    useEffect(()=>{
-        setMounted(true)
-    },[]);
+  useEffect(() => {
+    setIsMounted(true); // Set to true when the component is mounted on the client side
+  }, []);
 
-    if(!mounted){
-        return null;
-    }
-
-    const router = useRouter();
-    const params = useParams();
+  if (!isMounted) {
+    return null; // Avoid rendering mismatched content during SSR
+  }
 
   return (
     <div className='m-0 cursor-pointer' 
-    onClick={()=>router.push(`/${params.storeId}/stockInformation`)}
+      onClick={() => router.push(`/${params.storeId}/stockInformation`)}
     >
- 
       <DashboardCard 
-      title="Product Stock"
-      value={"View Stock Info ->"}
-      icon={<Box size={18} />}
+        title="Product Stock"
+        value="View Stock Info ->"
+        icon={<Box size={18} />}
       />
     </div>
-  )
+  );
 }
 
-export default ViewStockCard
+export default ViewStockCard;

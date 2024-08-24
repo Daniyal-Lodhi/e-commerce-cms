@@ -1,13 +1,14 @@
+import GetGraphRevenue from "@/actions/get-graph-revenue";
 import { getSales } from "@/actions/get-sales";
 import { getTotalRevenue } from "@/actions/get-total-revenue";
 import Currency from "@/components/currency";
 import { Heading } from "@/components/heading";
+import OverviewCard from "@/components/overview-card";
 import DashboardCard from "@/components/ui/dashboard-card";
 import ViewStockCard from "@/components/ui/view-stock-card";
 import prismadb from "@/lib/prismadb";
 import { auth } from "@clerk/nextjs/server";
-import { Box, CreditCard, HandCoins, } from "lucide-react";
-import Link from "next/link";
+import { CreditCard, HandCoins, } from "lucide-react";
 import { redirect } from "next/navigation";
 
 
@@ -30,6 +31,8 @@ export const Store = async (
 
     const totalRevenue = await getTotalRevenue(params.storeId);
     const sales = await getSales(params.storeId);
+    const GraphRevenueData = await GetGraphRevenue(params.storeId);
+    // console.log(GraphRevenueData)
 
     if (!store) {
         redirect('/');
@@ -40,23 +43,28 @@ export const Store = async (
                 <Heading title="Dashboard" description={"Overview of your dashboard."} />
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:grid-cols-3 h-auto" >
+            <div className="grid grid-cols-1  flex-wrap sm:grid-cols-2 gap-4 md:grid-cols-3 h-auto" >
                 <DashboardCard
+                classname="h-full"
+                
                     title="Total Revenue"
                     value={<Currency value={totalRevenue} />}
                     icon={<HandCoins size={18} className="text-gray-700" />}
                 />
-                
+
                 <DashboardCard
                     title="Sales"
                     value={`+${sales}`}
                     icon={<CreditCard size={18} className="text-gray-700" />}
                 />
-
-                <ViewStockCard/>
-
-                
+                <ViewStockCard />
             </div>
+             {/* chart */}
+                <div className="mt-3" >
+                   <OverviewCard GraphRevenueData={GraphRevenueData} />
+                </div>
+
+            
         </div>
     )
 }
