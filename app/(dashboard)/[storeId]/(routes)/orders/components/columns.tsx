@@ -8,17 +8,17 @@ import UpdateOrderStatus from "./update-order-status"
 // You can use a Zod schema here if you want.
 export type OrderColumn = {
   id: string
-  products : string
-  totalPrice : number
+  products: string
+  totalPrice: number
   phoneNumber: string
   address: string | null
-  createdAt : string
-  paid :boolean
-  completed:boolean
+  createdAt: string
+  paid: string
+  completed: string
 }
 
 export const orderColumns: ColumnDef<OrderColumn>[] = [
- 
+
   {
     accessorKey: "products",
     header: "Products",
@@ -34,18 +34,20 @@ export const orderColumns: ColumnDef<OrderColumn>[] = [
   {
     accessorKey: "totalPrice",
     header: "Total Price",
-    cell:({row})=><Currency  value={row.original.totalPrice} />
+    cell: ({ row }) => <Currency value={row.original.totalPrice} />
   },
   {
     accessorKey: "paid",
     header: "Paid",
   },
- 
+
   {
-    accessorKey: "completed",
     header: "Completed",
-  },{
-    id:"OrderUpdate",
-    cell:({row})=><UpdateOrderStatus  orderId={row.original.id} isPaid={row.original.paid} isCompleted={row.original.completed} />
+    cell: ({ row }) => <div className="flex items-center gap-2" >
+      <div>{row.original.completed}</div>
+      <UpdateOrderStatus orderId={row.original.id} isPaid={row.original.paid} isCompleted={row.original.completed} />
+
+    </div>
+
   }
 ]

@@ -13,7 +13,6 @@ interface UpdateOrderStatusProps {
 const UpdateOrderStatus: React.FC<UpdateOrderStatusProps> = ({
     orderId,
     isPaid,
-    isCompleted
 }) => {
     const router = useRouter();
     const params = useParams();
@@ -34,7 +33,7 @@ const UpdateOrderStatus: React.FC<UpdateOrderStatusProps> = ({
     return (
         <div className='flex items-center' >
             <Checkbox
-            defaultChecked={isCompleted == 'true'}
+            defaultChecked={isPaid == 'true'}
                 disabled={isPaid=='false' ? true : false}
                 className='disabled:text-gray-500 m-0  '
                 title={isPaid=='false' ? "Order can not be completed until it is paid" : "Mark as completed"}

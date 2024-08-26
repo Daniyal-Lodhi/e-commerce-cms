@@ -7,14 +7,11 @@ import {
     useReactTable,
     getPaginationRowModel,
     ColumnFiltersState,
-    SortingState,
     getFilteredRowModel,
-    getSortedRowModel,
-
 } from "@tanstack/react-table"
 
 
-import {useState} from "react"
+import { useState } from "react"
 import {
     Table,
     TableBody,
@@ -25,16 +22,21 @@ import {
 } from "@/components/ui/table"
 import { Button } from "./button"
 import { Input } from "./input"
+import { usePathname } from "next/navigation"
+import { SelectDataItem } from "./select-item"
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
-    searchKey : string
+    searchKey?: string
     data: TData[]
+    searchKey2?: string
+    searchKey3?: string
 }
 
 export function DataTable<TData, TValue>({
     columns,
     searchKey,
     data,
+
 }: DataTableProps<TData, TValue>) {
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
         []
@@ -52,17 +54,35 @@ export function DataTable<TData, TValue>({
 
     })
 
+    const [searchKeySelect, setSearchKeySelect] = useState('products');
+
+
+    const pathname = usePathname();
+    const currentPath: string = pathname.substring(pathname.lastIndexOf('/') + 1, pathname.length)
+
     return (
         <>
-            <div className="flex items-center py-4">
+            <div className="flex items-center py-4 gap-4">
                 <Input
-                    placeholder={`Filter ${searchKey}...`}
-                    value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ""}
-                    onChange={(event) =>
-                        table.getColumn(searchKey)?.setFilterValue(event.target.value)
+                    placeholder={`Filter ${currentPath == 'orders' ? searchKeySelect : searchKey}...`}
+                    value={(table.getColumn(currentPath == 'orders' ? searchKeySelect : searchKey!)?.getFilterValue() as string) ?? ""}
+                    onChange={(event) => {
+                        return (table.getColumn(currentPath == 'orders' ? searchKeySelect : searchKey!)?.setFilterValue(event.target.value))
+                    }
                     }
                     className="max-w-sm"
                 />
+                {currentPath === 'orders' &&
+                    <div>
+                        <SelectDataItem
+                            data={['Product', 'Phone', 'Paid', 'Completed']}
+                            setData={setSearchKeySelect}
+                            defSearchKey={"Product"}
+                            title=" Select filter"
+                        />
+                    </div>
+
+                }
             </div>
 
             <div className="rounded-md border">

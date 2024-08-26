@@ -32,9 +32,9 @@ export const OrderPage = async (
                 return totalPrice + Number(currentValue.product.price)
             },0),
             phoneNumber: order.phoneNumber || "",
-            completed:order.completed,
+            completed:String(order.completed),
             address: order.address,
-            paid:order.isPaid ,
+            paid:String(order.isPaid) ,
             createdAt: format(new Date(order.createdAt),'MMMM d,yyyy')
         }
     })

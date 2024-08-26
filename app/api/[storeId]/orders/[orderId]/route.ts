@@ -10,6 +10,16 @@ export const PATCH = async (req: Request,
 ) => {
     const { completed } = await req.json();
     try {
+
+        const order = await prismadb.order.findUnique({
+            where: {
+                id: params.orderId
+            }
+        })
+        if(!order?.isPaid){
+            return new NextResponse("Order is not yet paid",{status:400})
+        }
+        
         await prismadb.order.update({
             where: {
                 id: params.orderId

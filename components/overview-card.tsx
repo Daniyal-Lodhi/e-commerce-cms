@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { Card, CardHeader, CardTitle, CardContent } from './ui/card'
 import { YearWiseGraphData } from '@/actions/get-graph-revenue'
 import Overview from './overview'
-import { SelectYear } from './ui/select-year'
+import { SelectDataItem } from './ui/select-item'
 
 interface OverviewCardProps {
     GraphRevenueData: YearWiseGraphData
@@ -23,9 +23,10 @@ const OverviewCard: React.FC<OverviewCardProps> = ({
                 <CardTitle>
                     <div className='flex items-center gap-3' >
                         Overview
-                        <SelectYear 
-                        years={dataYears}
-                        setDataYear={setDataYear}
+                        <SelectDataItem 
+                        data={dataYears}
+                        title='Select Year'
+                        setData={setDataYear}
                         latestYear={LatestYearInData}
                         />
                     </div>
