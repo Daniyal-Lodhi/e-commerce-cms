@@ -8,27 +8,46 @@ export const PATCH = async (req: Request,
         }
     }
 ) => {
-    const { completed } = await req.json();
-    try {
 
+    if (!params.orderId) {
+        return new NextResponse("Order Id is required", { status: 400 })
+    }
+    const { completed, paid } = await req.json();
+    try {
         const order = await prismadb.order.findUnique({
             where: {
                 id: params.orderId
             }
         })
-        if(!order?.isPaid){
-            return new NextResponse("Order is not yet paid",{status:400})
+        if (completed !== undefined) {
+            await prismadb.order.update({
+                where: {
+                    id: params.orderId
+                },
+                data: {
+                    completed,
+                    isPaid:true
+                }
+            })
+            return new NextResponse(`Order status updated => ${completed}`)
         }
-        
-        await prismadb.order.update({
-            where: {
-                id: params.orderId
-            },
-            data: {
-                completed
+        else if (paid !== undefined) {
+            if (order?.paymentType === "CARD") {
+                return new NextResponse("Cannot change the paid status since it is already paid by card", { status: 400 })
             }
-        })
-        return new NextResponse(`Order status updated => ${completed}`)
+            await prismadb.order.update({
+                where: {
+                    id: params.orderId
+                },
+                data: {
+                    isPaid: paid
+                }
+            })
+            return new NextResponse(`Order paid status updated => ${paid}`)
+
+
+
+        }
     } catch (error) {
         console.log("[ORDER_PATCH:]", error);
         return new NextResponse("Some Error occured");

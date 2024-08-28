@@ -118,17 +118,22 @@ model Image {
   @@index([productId])
 }
 
+enum paymentType{
+  COD
+  CARD
+}
+
 model Order {
   id        String  @id @default(uuid())
   storeId   String
   store     Store   @relation("StoreToOrders", fields: [storeId], references: [id])
   userId    String
-  completed Boolean @default(false)
-
+  paymentType paymentType
   phoneNumber String?
+  address     String?
   orderItems  OrderItems[] @relation("OrderToOrderItems")
   isPaid      Boolean
-  address     String?
+  completed Boolean @default(false)
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @default(now())
 

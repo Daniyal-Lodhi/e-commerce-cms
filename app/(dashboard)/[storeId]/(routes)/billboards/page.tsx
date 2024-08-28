@@ -1,5 +1,6 @@
 import BillboardClient from "./components/client";
 import prismadb from "@/lib/prismadb";
+import { Billboards } from "@prisma/client";
 
 import { format } from "date-fns";
 

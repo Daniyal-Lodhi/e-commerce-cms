@@ -3,6 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table"
 import Currency from "@/components/currency"
 import UpdateOrderStatus from "./update-order-status"
+import UpdatePaidStatus from "./update-paid-status"
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -13,8 +14,9 @@ export type OrderColumn = {
   phoneNumber: string
   address: string | null
   createdAt: string
-  paid: string
-  completed: string
+  paid: boolean
+  completed: boolean
+  paymentType:string
 }
 
 export const orderColumns: ColumnDef<OrderColumn>[] = [
@@ -37,15 +39,21 @@ export const orderColumns: ColumnDef<OrderColumn>[] = [
     cell: ({ row }) => <Currency value={row.original.totalPrice} />
   },
   {
-    accessorKey: "paid",
+    header: "Payment Type",
+    accessorKey: "paymentType",
+  },
+  {
     header: "Paid",
+    cell: ({ row }) => <div className="flex items-center gap-2" >
+      <UpdatePaidStatus isCompleted={row.original.completed} orderId={row.original.id} isPaid={row.original.paid} paymentType={row.original.paymentType} />
+
+    </div>
   },
 
   {
     header: "Completed",
     cell: ({ row }) => <div className="flex items-center gap-2" >
-      <div>{row.original.completed}</div>
-      <UpdateOrderStatus orderId={row.original.id} isPaid={row.original.paid} isCompleted={row.original.completed} />
+      <UpdateOrderStatus  orderId={row.original.id} isPaid={row.original.paid} isCompleted={row.original.completed} />
 
     </div>
 

@@ -27,7 +27,6 @@ export async function POST(req: Request,
     }
     if(!userId){
         return new NextResponse("User Id is required", { status: 400, headers:corsHeaders })
-
     }
 
 
@@ -71,6 +70,7 @@ export async function POST(req: Request,
     const order = await prismadb.order.create({
         data: {
             userId:userId,
+            paymentType:"CARD",
             storeId: params.storeId,
             isPaid: false,
             orderItems: {
