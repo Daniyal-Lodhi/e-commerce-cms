@@ -12,6 +12,7 @@ model Store {
   id         String       @id @default(uuid())
   name       String
   userId     String
+  frontendUrl String?
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @default(now())
   billboards Billboards[] @relation("StoreToBillboards")
@@ -19,8 +20,8 @@ model Store {
   products   Product[]    @relation("StoreToProducts")
   orders     Order[]      @relation("StoreToOrders")
 
-  sizes Size[]  @relation("StoreToSizes")
-  color Color[] @relation("StoreToColor")
+  sizes    Size[]    @relation("StoreToSizes")
+  color    Color[]   @relation("StoreToColor")
 }
 
 model Billboards {
@@ -28,6 +29,7 @@ model Billboards {
   storeId    String
   store      Store        @relation("StoreToBillboards", fields: [storeId], references: [id])
   label      String
+  featured   Boolean      @default(false)
   imageUrl   String
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt
@@ -118,31 +120,31 @@ model Image {
   @@index([productId])
 }
 
-enum paymentType{
+enum paymentType {
   COD
   CARD
 }
 
 model Order {
-  id        String  @id @default(uuid())
-  storeId   String
-  store     Store   @relation("StoreToOrders", fields: [storeId], references: [id])
-  userId    String
+  id          String       @id @default(uuid())
+  storeId     String
+  store       Store        @relation("StoreToOrders", fields: [storeId], references: [id])
+  userId      String
   paymentType paymentType
   phoneNumber String?
   address     String?
   orderItems  OrderItems[] @relation("OrderToOrderItems")
   isPaid      Boolean
-  completed Boolean @default(false)
+  completed   Boolean      @default(false)
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @default(now())
+  completedAt DateTime?
 
   @@index([storeId])
 }
 
 model OrderItems {
-  id String @id @default(uuid())
-
+  id        String  @id @default(uuid())
   orderId   String
   order     Order   @relation("OrderToOrderItems", fields: [orderId], references: [id])
   productId String

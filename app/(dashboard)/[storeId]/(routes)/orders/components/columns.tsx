@@ -17,6 +17,7 @@ export type OrderColumn = {
   paid: boolean
   completed: boolean
   paymentType:string
+  completedAt:Date | null
 }
 
 export const orderColumns: ColumnDef<OrderColumn>[] = [
@@ -53,7 +54,12 @@ export const orderColumns: ColumnDef<OrderColumn>[] = [
   {
     header: "Completed",
     cell: ({ row }) => <div className="flex items-center gap-2" >
-      <UpdateOrderStatus  orderId={row.original.id} isPaid={row.original.paid} isCompleted={row.original.completed} />
+      <UpdateOrderStatus  
+      orderId={row.original.id} 
+      isPaid={row.original.paid} 
+      isCompleted={row.original.completed} 
+      completedAt={row.original.completedAt}
+      />
 
     </div>
 

@@ -1,6 +1,21 @@
 
+import { Metadata } from "next";
 import BillboardFormPage from "./components/billboardsForm"
 import prismadb from "@/lib/prismadb";
+import { usePathname } from "next/navigation";
+
+
+
+
+  export async function generateMetadata({ params }: { params: { billboardId: string } }): Promise<Metadata> {
+    const isEditMode = params.billboardId === "new";
+  
+    return {
+      title: isEditMode ? "Create Billboard" : "Edit Billboard",
+      description: "CMS Dashboard for managing billboards",
+    };
+  }
+
 
 const BillboardPage = async ({params}:{
     params:{billboardId:string}

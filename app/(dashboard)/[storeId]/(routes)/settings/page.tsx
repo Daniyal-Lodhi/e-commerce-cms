@@ -2,7 +2,12 @@ import prismadb from "@/lib/prismadb";
 import { auth } from "@clerk/nextjs/server"
 import { redirect } from "next/navigation";
 import { SettingsFormPage } from "./components/settings-form";
+import { Metadata } from "next";
 
+
+export const metadata:Metadata = {
+    title: 'Settings',
+  }
 
 interface settingsPageProps {
     params:{
@@ -24,6 +29,8 @@ const settingPage : React.FC<settingsPageProps> = async ({
             id:params.storeId
         }
     })
+    const storeJson = JSON.parse(JSON.stringify(store)) ;
+console.log(storeJson)
 
     if(!store){
         redirect('/')
@@ -34,7 +41,7 @@ const settingPage : React.FC<settingsPageProps> = async ({
     return(
         <div className="flex-col">
             <div className="flex-1 p-8 pt-6 space-y-4">
-                <SettingsFormPage initialData={store} />
+                { store && <SettingsFormPage initialData={store}  />}
 
             </div>
             

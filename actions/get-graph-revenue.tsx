@@ -43,7 +43,7 @@ const GetGraphRevenue = async (storeId: string) => {
 
         // Ensure the month index exists
         if (!monthlyRevenue[year][month]) {
-            monthlyRevenue[year][month] = 0; // Initialize the month with 0
+            monthlyRevenue[year][month] = 0; 
         }
         let revenueForOrder = 0;
         for (const orderItems of orders.orderItems) {
@@ -51,7 +51,7 @@ const GetGraphRevenue = async (storeId: string) => {
             monthlyRevenue[year][month] = (monthlyRevenue[year][month] || 0) + revenueForOrder;
         }
     }
-    // console.log(monthlyRevenue)
+    console.log(monthlyRevenue)
     // graphData for month 
     let graphData: MonthWiseGraphData[] = [
         { name: "January", total: 0 },
@@ -72,7 +72,7 @@ const GetGraphRevenue = async (storeId: string) => {
     for (const year of workYears) {
         // graph data for each working year
         // yearWiseGraphData[year] = graphData;
-        yearWiseGraphData[year] = JSON.parse(JSON.stringify(graphData)); // Deep clone the graphData
+        yearWiseGraphData[year] = JSON.parse(JSON.stringify(graphData)); // Deep clone
     }
     // console.log(yearWiseGraphData);
     for (const i in monthlyRevenue) {
@@ -93,6 +93,23 @@ const GetGraphRevenue = async (storeId: string) => {
 
 }
 
+const currentYear = new Date().getFullYear();
 
+export const dummyYearWiseData:YearWiseGraphData={
+    [currentYear]:[
+        { name: 'January', total: 0 },
+        { name: 'february', total: 0 },
+        { name: 'march', total: 0 },
+        { name: 'april', total: 0 },
+        { name: 'may', total: 0 },
+        { name: 'june', total: 0 },
+        { name: 'july', total: 0 },
+        { name: 'august', total: 0 },
+        { name: 'september', total: 0 },
+        { name: 'october', total: 0 },
+        { name: 'november', total: 0 },
+        { name: 'december', total: 0 }
+      ]
+}
 
 export default GetGraphRevenue;

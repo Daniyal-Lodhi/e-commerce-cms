@@ -1,6 +1,16 @@
-
+import { Metadata } from "next";
 import ProductFormPage from "./components/productsForm";
 import prismadb from "@/lib/prismadb";
+
+
+export async function generateMetadata({ params }: { params: { productId: string } }): Promise<Metadata> {
+    const isEditMode = params.productId === "new";
+  
+    return {
+      title: isEditMode ? "Create Product" : "Edit Product",
+      description: "CMS Dashboard for managing products",
+    };
+  }
 
 const ProductPage = async ({params}:{
     params:{storeId:string,productId:string}

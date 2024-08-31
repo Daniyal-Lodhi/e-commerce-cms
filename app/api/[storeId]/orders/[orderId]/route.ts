@@ -12,7 +12,7 @@ export const PATCH = async (req: Request,
     if (!params.orderId) {
         return new NextResponse("Order Id is required", { status: 400 })
     }
-    const { completed, paid } = await req.json();
+    const { completed, paid,completedAt } = await req.json();
     try {
         const order = await prismadb.order.findUnique({
             where: {
@@ -20,15 +20,29 @@ export const PATCH = async (req: Request,
             }
         })
         if (completed !== undefined) {
+            if (completedAt) {
+                await prismadb.order.update({
+                    where: {
+                        id: params.orderId
+                    },
+                    data: {
+                        completed,
+                        isPaid:true,
+                        completedAt:new Date()
+                    }
+                })
+            }
+            else{
             await prismadb.order.update({
                 where: {
                     id: params.orderId
                 },
                 data: {
                     completed,
-                    isPaid:true
+                    isPaid:true,
                 }
             })
+        }
             return new NextResponse(`Order status updated => ${completed}`)
         }
         else if (paid !== undefined) {

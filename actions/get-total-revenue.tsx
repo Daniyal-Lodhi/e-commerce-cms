@@ -1,6 +1,6 @@
 import prismadb from "@/lib/prismadb"
 
-
+export const revalidate = false;
 
 export const getTotalRevenue = async (storeId: string) => {
     const orders = await prismadb.order.findMany({

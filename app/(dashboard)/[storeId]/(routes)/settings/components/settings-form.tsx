@@ -22,9 +22,9 @@ import { useOrigin } from '@/hooks/use-origin'
 interface SettingsFormProps {
     initialData: Store
 }
-
 const SettingsFormSchema = z.object({
-    name: z.string().min(1)
+    name: z.string().min(1),
+    frontendUrl:z.string().min(1),
 })
 type SettingsFormZ = z.infer<typeof SettingsFormSchema>;
 
@@ -32,14 +32,18 @@ type SettingsFormZ = z.infer<typeof SettingsFormSchema>;
 export const SettingsFormPage: React.FC<SettingsFormProps> = ({
     initialData
 }) => {
-    const [open, setOpen] = useState(false);
-    const [loading, setLoading] = useState(false);
+    // console.log(initialData)
     const params = useParams();
+    const [loading, setLoading] = useState(false);
+    const [open, setOpen] = useState(false);
     const router = useRouter();
 
     const form = useForm<SettingsFormZ>({
         resolver: zodResolver(SettingsFormSchema),
-        defaultValues: initialData
+        defaultValues: {
+            name:initialData.name,
+            frontendUrl: initialData?.frontendUrl || ""
+        }
     })
 
     const onSubmit = async (data: SettingsFormZ) => {
@@ -52,6 +56,7 @@ export const SettingsFormPage: React.FC<SettingsFormProps> = ({
             toast.success('Store updated successfully')
         } catch (error) {
             toast.error("Something went wrong.")
+            console.log(error)
         }
         finally {
             setLoading(false);
@@ -106,9 +111,21 @@ export const SettingsFormPage: React.FC<SettingsFormProps> = ({
                                     <FormMessage />
                                 </FormItem>
                             )}
-                        >
-
-                        </FormField>
+                        />
+                         <FormField
+                            name='frontendUrl'
+                            control={form.control}
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Frontend Url</FormLabel>
+                                    <FormControl>
+                                        <Input disabled={loading} {...field} placeholder='Frontend url' />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        
 
                     </div>
                     <Button disabled={loading} type='submit' className='mt-4'  >Save Changes</Button>

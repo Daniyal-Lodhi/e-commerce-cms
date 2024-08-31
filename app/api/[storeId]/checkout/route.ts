@@ -86,7 +86,11 @@ export async function POST(req: Request,
     });
 
     // 5. Creating stripe checkout session
-
+    const store = await prismadb.store.findUnique({
+        where:{
+            id:params.storeId
+        }
+    })
     const session = await stripe.checkout.sessions.create({
         line_items,
         mode: 'payment',
@@ -94,8 +98,8 @@ export async function POST(req: Request,
         phone_number_collection: {
             enabled: true
         },
-        success_url: `${process.env.FRONTEND_STORE_URL}/cart?success=1`,
-        cancel_url: `${process.env.FRONTEND_STORE_URL}/cart?cancelled=1`,
+        success_url: `${store?.frontendUrl}/cart?success=1`,
+        cancel_url: `${store?.frontendUrl}/cart?cancelled=1`,
         //  we will use this metadata to update the isPaid status of the order
         metadata: {
             orderId: order.id,

@@ -8,7 +8,7 @@ import * as z from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import AlertModal from '@/components/Modals/alert-modal'
 import toast from 'react-hot-toast'
@@ -18,6 +18,7 @@ import { ApiAlert } from '@/components/ui/api-alert'
 import { useOrigin } from '@/hooks/use-origin'
 import { Heading } from '@/components/heading'
 import UploadImage from '@/app/(dashboard)/[storeId]/(routes)/billboards/[billboardId]/components/upload-image'
+import { Checkbox } from '@/components/ui/checkbox'
 
 
 interface BillboardFormProps {
@@ -27,6 +28,7 @@ interface BillboardFormProps {
 const BillboardSchema = z.object({
     label: z.string().min(1),
     imageUrl: z.string().min(1),
+    featured: z.boolean()
 })
 type BillboardFormZ = z.infer<typeof BillboardSchema>;
 
@@ -45,10 +47,11 @@ export const BillboardFormPage: React.FC<BillboardFormProps> = ({
     const action = initialData ? "Save changes" : "Create Billboard";
 
     const form = useForm<BillboardFormZ>({
-        resolver: zodResolver(BillboardSchema), 
+        resolver: zodResolver(BillboardSchema),
         defaultValues: {
             label: initialData?.label || '',
-            imageUrl: initialData?.imageUrl || ''
+            imageUrl: initialData?.imageUrl || '',
+            featured: initialData?.featured || false
         }
     })
 
@@ -58,11 +61,12 @@ export const BillboardFormPage: React.FC<BillboardFormProps> = ({
 
 
         try {
-            var res ;
-            if(initialData){
+            var res;
+            if (initialData) {
                 res = await axios.patch(`/api/${params.storeId}/billboards/${params.billboardId}`, data)
+                console.log(data)
             }
-            else{
+            else {
                 res = await axios.post(`/api/${params.storeId}/billboards`, data)
             }
             console.log(res.data)
@@ -93,7 +97,6 @@ export const BillboardFormPage: React.FC<BillboardFormProps> = ({
         }
     }
 
-    const origin = useOrigin();
 
     return (
         <>
@@ -134,11 +137,11 @@ export const BillboardFormPage: React.FC<BillboardFormProps> = ({
                                                 // console.log(url)
                                                 field.onChange(url)
                                             }}
-                                            
+
                                             onRemove={() => field.onChange("")}
                                         />
                                     </FormControl>
-                                    <FormMessage/>
+                                    <FormMessage />
                                 </FormItem>
                             )}
                         />
@@ -158,6 +161,34 @@ export const BillboardFormPage: React.FC<BillboardFormProps> = ({
                                 )}
                             >
 
+                            </FormField>
+                            <FormField
+                                disabled={loading}
+
+                                name='featured'
+                                control={form.control}
+                                render={({ field }) => (
+                                    <FormItem className='flex items-start space-x-3 p-4 border rounded-md'>
+                                        <FormControl>
+                                            <Checkbox
+                                            disabled={loading}
+                                                checked={field.value}
+                                                onCheckedChange={field.onChange}
+                                                className='mt-2' // Adjust height and width if needed
+                                            />
+                                        </FormControl>
+
+                                        <div className='flex flex-col space-y-1 leading-none'>
+                                            <FormLabel>Featured</FormLabel>
+                                            <FormDescription className='text-sm text-slate-700'>
+                                                This billboard will appear on the home page
+                                            </FormDescription>
+                                        </div>
+
+                                    </FormItem>
+
+                                )}
+                            >
                             </FormField>
                         </div>
 

@@ -13,7 +13,7 @@ export const PATCH = async (
     try {
         const body = await req.json();
         const { userId } = auth();
-        const { name } = body;
+        const { name, frontendUrl } = body;
 
 
         if (!userId) {
@@ -25,32 +25,45 @@ export const PATCH = async (
         if (!params.storeId) {
             return new NextResponse("Store id is required", { status: 400 });
         }
-        
+
         const storeByUserId = await prismadb.store.findFirst({
             where: {
-                id: "params.storeId",
+                id: params.storeId,
                 userId
             }
         })
         if (!storeByUserId) {
             return new NextResponse("You are not Authorized for make changes in this store", { status: 403 });
         }
-
-
-        const store = await prismadb.store.updateMany({
-            where: {
-                id: params.storeId,
-                userId
-            },
-            data: {
-                name
-            }
-        })
+        var store;
+        if (frontendUrl) {
+             store = await prismadb.store.updateMany({
+                where: {
+                    id: params.storeId,
+                    userId
+                },
+                data: {
+                    name,
+                    frontendUrl
+                }
+            })
+        }
+        else{
+             store = await prismadb.store.updateMany({
+                where: {
+                    id: params.storeId,
+                    userId
+                },
+                data: {
+                    name
+                }
+            })
+        }
         return Response.json(store, { status: 200 });
     }
     catch (error) {
-        console.log("[STORE_PATCH]",error) ;
-        return new NextResponse("Internal Error",{status:500}) ;
+        console.log("[STORE_PATCH]", error);
+        return new NextResponse("Internal Error", { status: 500 });
     }
 }
 
@@ -89,7 +102,7 @@ export const DELETE = async (
         return Response.json(store, { status: 200 });
     }
     catch (error) {
-        console.log("[STORE_DELETE]",error) ;
-        return new NextResponse("Internal Error",{status:500}) ;
+        console.log("[STORE_DELETE]", error);
+        return new NextResponse("Internal Error", { status: 500 });
     }
 }

@@ -1,6 +1,21 @@
-
 import prismadb from "@/lib/prismadb";
 import SizeFormPage from "./components/SizesForm";
+import { Metadata } from "next";
+
+
+
+
+export async function generateMetadata({ params }: { params: { sizeId: string } }): Promise<Metadata> {
+    const isEditMode = params.sizeId === "new";
+  
+    return {
+      title: isEditMode ? "Create Size" : "Edit Size",
+      description: "CMS Dashboard for managing sizes",
+    };
+  }
+
+
+
 
 const SizePage = async ({params}:{
     params:{sizeId:string}

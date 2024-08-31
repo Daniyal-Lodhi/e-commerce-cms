@@ -5,12 +5,19 @@ import { ClerkProvider } from '@clerk/nextjs'
 import { ModalProvider } from "@/providers/modal-provider";
 import ToastProvider from "@/providers/toast-provider";
 import { ThemeProvider } from "@/components/theme-provider";
+import Head from "next/head";
 const inter = Inter({ subsets: ["latin"] });
 
+let title = "CMS";
+
 export const metadata: Metadata = {
-  title: "Admin dashboard",
-  description: "Admin dashboard",
+  title: {
+    template: `${title} | %s`, // Template for dynamic title
+    default: `${title} Dashboard`, // Absolute title
+  },
+  description: "CMS dashboard",
 };
+
 
 export default function RootLayout({
   children,
@@ -23,6 +30,8 @@ export default function RootLayout({
         suppressHydrationWarning={true}
 
       >
+
+
         <body className={inter.className}
           suppressHydrationWarning={true}
 

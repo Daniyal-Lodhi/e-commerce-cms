@@ -32,7 +32,6 @@ export default function StoreSwitcher({
 
 
     const storeModal = useStoreModal();
-    const pathname = usePathname();
     const params = useParams();
     const [isOpen, setIsOpen] = useState(false);
     const router = useRouter();
@@ -54,7 +53,7 @@ export default function StoreSwitcher({
         <>
             <Popover open={isOpen} onOpenChange={setIsOpen}>
                 <PopoverTrigger>
-                    <div className={cn("text-sm border py-2 px-3 rounded-md flex w-[200px] justify-between items-center", className)}
+                    <div className={cn("text-sm border py-2 px-3 rounded-md flex w-auto sm:w-[200px]  justify-between items-center", className)}
                         title="Select a store"
                     >
                         <StoreIcon className="mr-2 w-4 h-4 " color="black" />
@@ -62,7 +61,7 @@ export default function StoreSwitcher({
                         <ChevronsUpDown className="ml-auto h-4 shrink-0 opacity-50" />
                     </div>
                 </PopoverTrigger>
-                <PopoverContent className="w-[200px] p-0">
+                <PopoverContent className="sm:w-[200px] p-0 max-w-fit ">
                     <Command >
                     <CommandInput placeholder="Search store..." />
                     <CommandList>

@@ -1,7 +1,12 @@
 import ProductClient from "./components/client";
 import prismadb from "@/lib/prismadb";
-
 import { format } from "date-fns";
+import { Metadata } from "next";
+
+
+export const metadata:Metadata = {
+    title: 'Products',
+  }
 
 
 export const ProductsPage = async (

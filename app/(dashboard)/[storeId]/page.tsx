@@ -1,4 +1,4 @@
-import GetGraphRevenue from "@/actions/get-graph-revenue";
+import GetGraphRevenue, { dummyYearWiseData } from "@/actions/get-graph-revenue";
 import { getSales } from "@/actions/get-sales";
 import { getTotalRevenue } from "@/actions/get-total-revenue";
 import Currency from "@/components/currency";
@@ -15,7 +15,7 @@ import { redirect } from "next/navigation";
 
 
 export const Store = async (
-    params: { storeId: string }
+    {params}: {params: {storeId: string} }
 ) => {
     const { userId } = auth();
     if (!userId) {
@@ -28,11 +28,11 @@ export const Store = async (
             id: params.storeId
         }
     });
-
     const totalRevenue = await getTotalRevenue(params.storeId);
+    // console.log(params.storeId)
     const sales = await getSales(params.storeId);
     const GraphRevenueData = await GetGraphRevenue(params.storeId);
-    // console.log(GraphRevenueData)
+    console.log(GraphRevenueData)
 
     if (!store) {
         redirect('/');
@@ -61,7 +61,9 @@ export const Store = async (
             </div>
              {/* chart */}
                 <div className="mt-3" >
-                   <OverviewCard GraphRevenueData={GraphRevenueData} />
+                   { Object.keys(GraphRevenueData).length!==0 ? <OverviewCard GraphRevenueData={GraphRevenueData} /> : 
+                   <OverviewCard GraphRevenueData={dummyYearWiseData} /> 
+                   }
                 </div>
 
             

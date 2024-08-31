@@ -11,7 +11,7 @@ import {
 } from "@tanstack/react-table"
 
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import {
     Table,
     TableBody,
@@ -24,6 +24,7 @@ import { Button } from "./button"
 import { Input } from "./input"
 import { usePathname } from "next/navigation"
 import { SelectDataItem } from "./select-item"
+import { useSafeMood } from "@/hooks/use-safe-mood"
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     searchKey?: string
@@ -41,6 +42,10 @@ export function DataTable<TData, TValue>({
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
         []
     )
+    const {safeMood,enableSafeMood, disableSafeMood} = useSafeMood();
+    useEffect(()=>{
+console.log(safeMood)
+    },[safeMood])
     const table = useReactTable({
         data,
         columns,
@@ -73,13 +78,22 @@ export function DataTable<TData, TValue>({
                     className="max-w-sm"
                 />
                 {currentPath === 'orders' &&
-                    <div>
+                    <div className="flex items-center gap-2 w-full justify-between" >
                         <SelectDataItem
                             data={['Product', 'Phone', 'Paid', 'Completed']}
                             setData={setSearchKeySelect}
                             defSearchKey={"Product"}
                             title=" Select filter"
                         />
+                        <div>
+                            <Button
+                            title="Enable it to get a confirm modal before updating order completion."
+                            className={`${safeMood?"text-white bg-black hover:bg-black":"bg-white text-black hover:bg-white"} hover:bg-auto border `} 
+                            onClick={()=>{safeMood?disableSafeMood():enableSafeMood()}}
+                            >
+                                Safe mood
+                            </Button>
+                        </div>
                     </div>
 
                 }

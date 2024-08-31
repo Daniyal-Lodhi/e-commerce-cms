@@ -11,9 +11,11 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { Info } from "lucide-react";
 
 const formSchema = z.object({
     name: z.string().min(1),
+    frontendUrl: z.string().optional()
 })
 
 export const StoreModal = () => {
@@ -23,7 +25,8 @@ export const StoreModal = () => {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            name: ""
+            name: "",
+            frontendUrl:""
         }
     })
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -64,6 +67,26 @@ export const StoreModal = () => {
                                 </FormItem>
                             )}
                         />
+                        <div className="mt-3" >
+                        <FormField
+                        disabled={isLoading}
+                            control={form.control}
+                            name="frontendUrl"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel >Frontend Url (Optional)</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="Frontend Url" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        </div>
+                        <div className="flex items-center gap-2 px-1 mt-2 " >
+                            <Info size={12} />
+                            <p className="text-xs text-gray-600" >Make sure to add frontend url in the setting once it is set.</p>
+                        </div>
                         <div className="pt-6 flex justify-end items-center space-x-2" >
                             <Button disabled={isLoading} type="button" variant={'outline'} onClick={StoreModal.onClose} >Cancel</Button>
                             <Button disabled={isLoading} type="submit" >Continue</Button>

@@ -1,6 +1,18 @@
 
+import { Metadata } from "next";
 import CategoryFormPage from "./components/CategoryForm"
 import prismadb from "@/lib/prismadb";
+
+
+
+export async function generateMetadata({ params }: { params: { categoryId: string } }): Promise<Metadata> {
+    const isEditMode = params.categoryId === "new";
+  
+    return {
+      title: isEditMode ? "Create Category" : "Edit Category",
+      description: "CMS Dashboard for managing categories",
+    };
+  }
 
 const CategoryPage = async ({params}:{
     params:{categoryId:string, storeId:string} 

@@ -1,8 +1,12 @@
 import SizeClient from "./components/client";
 import prismadb from "@/lib/prismadb";
-
+import { Metadata } from "next";
 import { format } from "date-fns";
 
+
+export const metadata:Metadata = {
+    title: 'Sizes',
+  }
 
 export const SizePage = async (
     { params }: { params: { storeId: string } }

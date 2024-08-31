@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 export async function POST(req:Request){
     const {userId} = auth() ;
     const body = await req.json() ;
-    const { name } = body ;
+    const { name,frontendUrl } = body ;
     try {
         if(!userId){
             return new NextResponse("Unauthorized" , {status:401})
@@ -12,12 +12,24 @@ export async function POST(req:Request){
         if(!name){
             return new NextResponse("Name is required" , {status:400})
         }
-        const store = await prismadb.store.create({
-            data:{
-                name,
-                userId
-            } 
-        })
+        var store;
+        if(frontendUrl){
+            store = await prismadb.store.create({
+                data:{
+                    name,
+                    userId,
+                    frontendUrl
+                } 
+            })
+        }
+        else{
+            store = await prismadb.store.create({
+                data:{
+                    name,
+                    userId
+                } 
+            })
+        }
 
         return NextResponse.json(store) ;
         

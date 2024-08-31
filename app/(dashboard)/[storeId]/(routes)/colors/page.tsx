@@ -1,7 +1,12 @@
 import ColorClient from "./components/client";
 import prismadb from "@/lib/prismadb";
-
 import { format } from "date-fns";
+import { Metadata } from "next";
+
+
+export const metadata:Metadata = {
+    title: 'Colors',
+  }
 
 
 export const ColorPage = async (

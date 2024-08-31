@@ -34,7 +34,7 @@ export const PATCH = async (
     try {
         const body = await req.json();
         const { userId } = auth();
-        const { label, imageUrl } = body;
+        const { label, imageUrl,featured } = body;
 
 
         if (!userId) {
@@ -48,6 +48,10 @@ export const PATCH = async (
         }
         if (!params.billboardId) {
             return new NextResponse("billlboard id is required", { status: 400 });
+        }
+        if(featured == null || featured==undefined){
+            return new NextResponse("featured value is required", { status: 400 });
+
         }
         const storeByUserId = await prismadb.store.findFirst({
             where: {
@@ -67,7 +71,8 @@ export const PATCH = async (
             },
             data: {
                 label,
-                imageUrl
+                imageUrl,
+                featured
             }
         })
         return new Response("Billboard updated", { status: 200 });

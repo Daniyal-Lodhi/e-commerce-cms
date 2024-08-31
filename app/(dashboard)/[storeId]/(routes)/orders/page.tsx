@@ -3,7 +3,12 @@ import prismadb from "@/lib/prismadb";
 import { format } from "date-fns";
 import { OrderColumn } from "./components/columns";
 import OrderClient from "./components/client";
+import { Metadata } from "next";
 
+
+export const metadata:Metadata = {
+    title: 'Orders',
+  }
 
 export const OrderPage = async (
     { params }: { params: { storeId: string } }
@@ -36,7 +41,8 @@ export const OrderPage = async (
             address: order.address,
             paymentType:order.paymentType,
             paid:order.isPaid ,
-            createdAt: format(new Date(order.createdAt),'MMMM d,yyyy')
+            createdAt: format(new Date(order.createdAt),'MMMM d,yyyy'),
+            completedAt:order.completedAt,
         }
     })
     return (

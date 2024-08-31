@@ -1,6 +1,16 @@
-
 import prismadb from "@/lib/prismadb";
 import { ColorFormPage } from "./components/ColorForm";
+import { Metadata } from "next";
+
+
+export async function generateMetadata({ params }: { params: { colorId: string } }): Promise<Metadata> {
+    const isEditMode = params.colorId === "new";
+  
+    return {
+      title: isEditMode ? "Create Color" : "Edit Color",
+      description: "CMS Dashboard for managing colors",
+    };
+  }
 
 const ColorPage = async ({params}:{
     params:{colorId:string}

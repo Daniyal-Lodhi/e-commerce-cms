@@ -18,8 +18,8 @@ export const Navbar = async ()=>{
     }) ;
 
     return(
-        <div className="flex flex-row items-center justify-start border-b px-4 h-14 " >
-            <div className="mr-10"> 
+        <div className="flex flex-row items-center gap-x-3 sm:gap-0 justify-start border-b px-4 h-14 " >
+            <div className="sm:mr-10"> 
                 <StoreSwitcher items={stores}/>
             </div>
             <MainNav/>

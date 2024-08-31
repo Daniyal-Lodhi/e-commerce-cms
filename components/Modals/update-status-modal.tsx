@@ -1,16 +1,18 @@
+
+
 import { Modal } from "@/app/Modal"
 import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 
 
-interface alertModalProps {
+interface UpdateModalProps {
     isOpen: boolean;
     onClose: () => void;
-    onConfirm?: () => void;
+    onConfirm: (value:any) => void;
     loading: boolean; 
 }
 
-const AlertModal: React.FC<alertModalProps> = ({
+const UpdateModal: React.FC<UpdateModalProps> = ({
     isOpen,
     onClose,
     onConfirm,
@@ -27,13 +29,13 @@ const AlertModal: React.FC<alertModalProps> = ({
     return (
         <Modal  isOpen={isOpen} onClose={onClose}
             title="Are you sure?"
-            description="this action cannot be undone"
+            description="you want to update the status of this item?"
         >
             <div className="w-full pt-6 space-x-2 flex justify-end items-center">
                 <Button variant={'outline'} onClick={onClose} disabled={loading} >
                     Cancel
                 </Button>
-                <Button variant={'destructive'} onClick={ onConfirm } disabled={loading} >
+                <Button title="Enable it to show a warning modal before updating the order completion status" variant={'default'} onClick={ onConfirm } disabled={loading} >
                     Confirm
                 </Button>
 
@@ -44,4 +46,4 @@ const AlertModal: React.FC<alertModalProps> = ({
     )
 }
 
-export default AlertModal
+export default UpdateModal

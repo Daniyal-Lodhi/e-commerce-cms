@@ -79,7 +79,7 @@ export const ProductFormPage: React.FC<ProductFormProps> = ({
     })
 
     const onSubmit = async (data: ProductFormZ) => {
-        console.log(data)
+        setLoading(true);
         try {
             var res;
             if (initialData) {
@@ -116,7 +116,6 @@ export const ProductFormPage: React.FC<ProductFormProps> = ({
         }
     }
 
-    const origin = useOrigin();
 
     return (
         <>

@@ -3,7 +3,12 @@ import prismadb from "@/lib/prismadb";
 import { Billboards } from "@prisma/client";
 
 import { format } from "date-fns";
+import { Metadata } from "next";
 
+
+export const metadata:Metadata = {
+    title: 'Billboards',
+  }
 
 export const BillboardPage = async (
     { params }: { params: { storeId: string } }
@@ -17,11 +22,12 @@ export const BillboardPage = async (
         }
     })
 
-    const formattedBillboards = billboards.map(({id,label,createdAt})=>{
+    const formattedBillboards = billboards.map(({id,label,createdAt,featured})=>{
         // const formattedDate = format(new Date(createdAt), 'MMMM d, yyyy');
         return {
             id,
             label,
+            featured,
             createdAt: format(new Date(createdAt),'MMMM d,yyyy')
         }
     })

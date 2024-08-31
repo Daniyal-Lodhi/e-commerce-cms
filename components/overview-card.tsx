@@ -30,6 +30,8 @@ const OverviewCard: React.FC<OverviewCardProps> = ({
                         latestYear={LatestYearInData}
                         />
                     </div>
+                    <div className=' mt-1 text-sm text-gray-700 font-normal ' >Seems like you have not made any sales yet.</div>
+
                 </CardTitle>
 
             </CardHeader>

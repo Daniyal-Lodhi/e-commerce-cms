@@ -2,7 +2,11 @@ import BillboardClient, { CategoryClient } from "./components/client";
 import prismadb from "@/lib/prismadb";
 
 import { format } from "date-fns";
+import { Metadata } from "next";
 
+export const metadata:Metadata = {
+    title: 'Categories',
+  }
 
 export const CategoryPage = async (
     { params }: { params: { storeId: string } }
