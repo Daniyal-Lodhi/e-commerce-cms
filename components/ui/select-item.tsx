@@ -10,66 +10,63 @@ import {
 } from "@/components/ui/select"
 import { useEffect, useState } from "react"
 
-interface SelectDataItemProps{
-    data:string[]
-    setData: (value: string) => void
-    latestYear?:string
-    defSearchKey?:string
-    title:string
+interface SelectDataItemProps {
+  data: string[]
+  setData: (value: string) => void
+  latestYear?: string
+  searchKeySelect?: string
+  title: string
 }
 
-export const SelectDataItem:React.FC<SelectDataItemProps> = ({
-    data,
-    setData,
-    latestYear,
-    defSearchKey,
-    title
-})=> {
-    
-  
-  
-  const [mounted,Setmounted] = useState(false);
+export const SelectDataItem: React.FC<SelectDataItemProps> = ({
+  data,
+  setData,
+  latestYear,
+  searchKeySelect,
+  title
+}) => {
 
-    const handleChange = (selectedItem:string)=>{
-      if(latestYear){
-        setData(selectedItem)
-      }
-      else{
-        if(selectedItem == 'product'){
+
+
+  const [mounted, Setmounted] = useState(false);
+
+
+
+  const handleChange = (selectedItem: string) => {
+    if (latestYear) {
+      setData(selectedItem)
+    }
+    else {
+      if (selectedItem == 'products') {
         setData('products')
       }
-      else if(selectedItem == 'Phone'){
-        setData('phoneNumber')
+        if (selectedItem == 'phone') {
+          setData('phoneNumber')
+        }
+        // console.log(searchKeySelect)
       }
-      else if(selectedItem == 'Completed'){
-        setData('completed')
-      }
-      else if(selectedItem == 'Paid'){
-        setData('paid')
-      }
-      console.log(defSearchKey)
-      }
-    }    
+    
+  }
 
 
-    useEffect(()=>{
-        Setmounted(true);
-    },[])
+  useEffect(() => {
+    Setmounted(true);
+  }, [])
 
-    if(!mounted)
-        return null;
+  if (!mounted)
+    return null;
 
   return (
-    <Select onValueChange={handleChange} defaultValue={ latestYear || defSearchKey }     >
+    <Select onValueChange={handleChange} defaultValue={latestYear || searchKeySelect}     >
       <SelectTrigger className="w-[130px]">
-        <SelectValue  placeholder={title} />
+        <SelectValue placeholder={title} />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup  >
           <SelectLabel>{title}</SelectLabel>
           {
-            data && data.map((item)=>(
-                <SelectItem key={item} value={item}>{item}</SelectItem>
+            data && data.map((item) => (
+              <SelectItem key={item} value={item}>{item}</SelectItem>
             ))
           }
         </SelectGroup>

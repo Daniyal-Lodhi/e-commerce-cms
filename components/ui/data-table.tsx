@@ -80,9 +80,9 @@ console.log(safeMood)
                 {currentPath === 'orders' &&
                     <div className="flex items-center gap-2 w-full justify-between" >
                         <SelectDataItem
-                            data={['Product', 'Phone', 'Paid', 'Completed']}
+                            data={['products', 'phone']}
                             setData={setSearchKeySelect}
-                            defSearchKey={"Product"}
+                            searchKeySelect={searchKeySelect}
                             title=" Select filter"
                         />
                         <div>

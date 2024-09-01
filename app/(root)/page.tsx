@@ -1,10 +1,9 @@
 'use client'
 
 import { useStoreModal } from "@/hooks/use-store-modal";
-import { Metadata } from "next";
 import { useEffect } from "react";
 
-export const revalidate = false ;
+// export const revalidate = false ;
 
 
 export default function Home() {

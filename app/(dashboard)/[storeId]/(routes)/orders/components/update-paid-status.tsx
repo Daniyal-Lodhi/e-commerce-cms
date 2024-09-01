@@ -18,7 +18,7 @@ const UpdatePaidStatus: React.FC<UpdateOrderStatusProps> = ({
     isPaid,
     paymentType,
     isCompleted
-}) => {
+}) => { 
     const params = useParams();
     const router = useRouter();
     const [check, setCheck] = useState(isPaid || false);
