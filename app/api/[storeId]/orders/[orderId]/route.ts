@@ -12,39 +12,60 @@ export const PATCH = async (req: Request,
     if (!params.orderId) {
         return new NextResponse("Order Id is required", { status: 400 })
     }
-    const { completed, paid,completedAt } = await req.json();
+    const { completed, paid, completedAt } = await req.json();
     try {
         const order = await prismadb.order.findUnique({
             where: {
                 id: params.orderId
             }
         })
+        if (!order) {
+            return new NextResponse("Order not found", { status: 404 });
+        }
+        // for order completion state update
         if (completed !== undefined) {
             if (completedAt) {
+                // first time complete enabled
+
                 await prismadb.order.update({
                     where: {
                         id: params.orderId
                     },
                     data: {
                         completed,
-                        isPaid:true,
-                        completedAt:new Date()
+                        isPaid: true,
+                        completedAt: new Date()
                     }
                 })
+                return new NextResponse(`Order status updated => ${completed}`)
+
             }
-            else{
-            await prismadb.order.update({
-                where: {
-                    id: params.orderId
-                },
-                data: {
-                    completed,
-                    isPaid:true,
+            else {
+                // further attempt to update status due to mistakes
+                const orderCreationTime = new Date(order.createdAt).getTime();
+                const currentTime = new Date().getTime();
+                const timeDiffInMinutes = (currentTime - orderCreationTime) / (60 * 1000);
+                console.log("hello")
+                if (timeDiffInMinutes < 30) {
+                    await prismadb.order.update({
+                        where: {
+                            id: params.orderId
+                        },
+                        data: {
+                            completed,
+                            isPaid: true,
+                        }
+                    })
+                    return new NextResponse(`Order status updated => ${completed}`)
                 }
-            })
+                else {
+                    return new NextResponse('Cannot change completion status after 30 mins', { status: 400 })
+
+                }
+            }
         }
-            return new NextResponse(`Order status updated => ${completed}`)
-        }
+        // for order paid state update
+
         else if (paid !== undefined) {
             if (order?.paymentType === "CARD") {
                 return new NextResponse("Cannot change the paid status since it is already paid by card", { status: 400 })

@@ -1,9 +1,7 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
-import { Image } from "@prisma/client"
-import Currency from "@/components/currency"
-import { Edit, MoveRight } from "lucide-react"
+import { Edit } from "lucide-react"
 import { useParams, useRouter } from "next/navigation"
 
 // This type is used to define the shape of our data.
@@ -14,16 +12,26 @@ export type ProductColumn = {
     quantity: number
 }
 
+const EditButton = ({ row }:{row:any}) => {
+    const router = useRouter();
+    const params = useParams();
 
+    return (
+        <div
+            className="flex items-center gap-2 cursor-pointer"
+            onClick={() => router.push(`/${params.storeId}/products/${row.original.id}`)}
+        >
+            <Edit size={15} />
+            edit
+        </div>
+    )
+}
 
 export const productColumns: ColumnDef<ProductColumn>[] = [
-
-
     {
         header: "Product",
         accessorKey: "name",
     },
-
     {
         header: "Quantity",
         accessorKey: "quantity",
@@ -31,18 +39,6 @@ export const productColumns: ColumnDef<ProductColumn>[] = [
     },
     {
         id: 'actions',
-        cell: ({ row }) => {
-            const router = useRouter();
-            const params = useParams();
-            return (
-                <div className="flex items-center gap-2 cursor-pointer"
-                    onClick={() => router.push(`/${params.storeId}/products/${row.original.id}`)}
-                >
-                    <Edit size={15} />
-                    edit
-                </div>
-            )
-        }
+        cell: ({ row }) => <EditButton row={row} /> // Use the new EditButton component
     }
-
 ]

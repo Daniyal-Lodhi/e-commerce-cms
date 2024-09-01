@@ -6,6 +6,7 @@ import { useSafeMood } from '@/hooks/use-safe-mood'
 import axios from 'axios'
 import { useParams, useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 
 interface UpdateOrderStatusProps {
     orderId: string,
@@ -76,7 +77,8 @@ const UpdateOrderStatus: React.FC<UpdateOrderStatusProps> = ({
 
         } catch (error: any) {
             setcheck(!checked)
-            console.log(error)
+            console.log(error.response.data)
+            toast.error(error.response.data)
         } finally {
             setLoading(false);
             setOpen(false);
@@ -85,7 +87,6 @@ const UpdateOrderStatus: React.FC<UpdateOrderStatusProps> = ({
 
     const onCheckChange = (checked: boolean) => {
         setcheck(!checked)
-        console.log('hello')
         if (safeMood) {
             setOpen(true);
         }
@@ -106,7 +107,7 @@ const UpdateOrderStatus: React.FC<UpdateOrderStatusProps> = ({
             <div>
                 {String(check)}
             </div>
-            {!freeze && <Checkbox
+            { <Checkbox
                 checked={check}
                 className='disabled:text-gray-500 m-0  '
                 title={check == true ? "" : "Marking complete will always set the paid status to true"}

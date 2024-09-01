@@ -14,7 +14,7 @@ const Currency = ({value}:{value:string | Number}) => {
 
     useEffect(()=>{
         setMounted(true);
-    })
+    },[])
 
     if(!mounted){
         return null;

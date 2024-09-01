@@ -24,7 +24,7 @@ const UpdatePaidStatus: React.FC<UpdateOrderStatusProps> = ({
     const [check, setCheck] = useState(isPaid || false);
     useEffect(() => {
         setCheck(isPaid);
-    }, [isCompleted])
+    }, [isCompleted,isPaid])
     const onCheckChange = async (checked: boolean) => {
         try {
             setCheck(checked)
