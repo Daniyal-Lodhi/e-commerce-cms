@@ -98,7 +98,7 @@ export const SettingsFormPage: React.FC<SettingsFormProps> = ({
             <Separator />
             <Form {...form} >
                 <form onSubmit={form.handleSubmit(onSubmit)} >
-                    <div className='grid grid-cols-3 gap-8' >
+                    <div className='grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-8' >
                         <FormField
                             name='name'
                             control={form.control}

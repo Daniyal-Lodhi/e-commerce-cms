@@ -30,14 +30,9 @@ const UploadImage:React.FC<UploadImageProps> = ({
         onChange(result.info.secure_url) ;
         // console.log(result.info.secure_url   )
     }
-
-
-        
     if (!isMounted) {
         return null;
     }
-
-
     return(
         <div>
             <div className="flex gap-4 mb-4 items-center">
@@ -90,7 +85,4 @@ const UploadImage:React.FC<UploadImageProps> = ({
         </div>
     )
 }
-
-
-
 export default UploadImage ;

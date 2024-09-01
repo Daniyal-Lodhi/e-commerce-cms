@@ -140,14 +140,14 @@ export const ProductFormPage: React.FC<ProductFormProps> = ({
             </div>
             <Separator />
             <Form {...form} >
-                <form onSubmit={form.handleSubmit(onSubmit)} className='w-full space-y-8' >
+                <form onSubmit={form.handleSubmit(onSubmit)} className='w-full space-y-4 sm:space-y-8' >
                     <FormField
 
                         control={form.control}
                         name='images'
                         render={({ field }) => (
                             <FormItem >
-                                <div>{field.value.length}</div>
+                                {/* <div>{field.value.length}</div> */}
                                 <FormLabel>Product image</FormLabel>
                                 <FormControl >
                                     <UploadImage
@@ -163,7 +163,7 @@ export const ProductFormPage: React.FC<ProductFormProps> = ({
                     />
 
 
-                    <div className='grid grid-cols-3 gap-8'>
+                    <div className='grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-8'>
                         <FormField
                             disabled={loading}
                             name='name'
@@ -212,7 +212,7 @@ export const ProductFormPage: React.FC<ProductFormProps> = ({
 
                     </div>
 
-                    <div className='grid grid-cols-3 gap-8' >
+                    <div className='grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-8' >
                         <FormField
                             disabled={loading}
 
@@ -319,7 +319,7 @@ export const ProductFormPage: React.FC<ProductFormProps> = ({
 
 
                     </div>
-                    <div className='grid grid-cols-3 gap-8'>
+                    <div className='grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-8'>
                         <FormField
                             disabled={loading}
                             name='quantity'

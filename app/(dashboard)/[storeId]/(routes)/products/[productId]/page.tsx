@@ -47,7 +47,7 @@ const ProductPage = async ({params}:{
 
     return (
         <div className="flex-col">
-            <div className="flex-1 p-8 pt-6 space-y-4" >
+            <div className="flex-1 sm:p-8 p-4 pt-6 space-y-4" >
             <ProductFormPage
                 initialData={productJson}
                 category = {categories}

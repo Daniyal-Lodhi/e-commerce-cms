@@ -18,7 +18,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Button } from "./ui/button";
-import { ChevronDown, Presentation, Ruler, Shapes, Telescope } from "lucide-react";
+import { Bolt, ChevronDown, ListOrdered, Package, PaintBucket, Presentation, Ruler, Shapes, Telescope } from "lucide-react";
 
 
 
@@ -30,55 +30,61 @@ const MainNav = ({
     const params = useParams();
     const pathname = usePathname();
 
-    const routesIcon: React.ReactNode[] = [
-        <Telescope/>,
-        <Presentation/>,
-        <Shapes/>,
-        <Ruler />,
-        
-    ]
+
 
     const routes = [
         {
             href: `/${params.storeId}`,
             label: 'Overview',
-            active: pathname == `/${params.storeId}`
+            active: pathname == `/${params.storeId}`,
+            icon: <Telescope size={18} />,
         },
         {
             href: `/${params.storeId}/billboards`,
             label: 'Billboards',
-            active: pathname == `/${params.storeId}/billboards`
+            active: pathname == `/${params.storeId}/billboards`,
+            icon: <Presentation size={18} />,
         },
         {
             href: `/${params.storeId}/categories`,
             label: 'Categories',
-            active: pathname == `/${params.storeId}/categories`
+            active: pathname == `/${params.storeId}/categories`,
+            icon: <Shapes size={18} />,
+
         },
         {
             href: `/${params.storeId}/sizes`,
             label: 'Sizes',
-            active: pathname == `/${params.storeId}/sizes`
+            active: pathname == `/${params.storeId}/sizes`,
+            icon: <Ruler size={18} />,
+
         },
         {
             href: `/${params.storeId}/colors`,
             label: 'Colors',
-            active: pathname == `/${params.storeId}/colors`
+            active: pathname == `/${params.storeId}/colors`,
+            icon: <PaintBucket size={18} />
         },
 
         {
             href: `/${params.storeId}/products`,
             label: 'Products',
-            active: pathname == `/${params.storeId}/products`
+            active: pathname == `/${params.storeId}/products`,
+            icon: <Package size={18} />
         },
         {
             href: `/${params.storeId}/orders`,
             label: 'Orders',
-            active: pathname == `/${params.storeId}/orders`
+            active: pathname == `/${params.storeId}/orders`,
+            icon: <ListOrdered size={18} />
+
         },
         {
             href: `/${params.storeId}/settings`,
             label: 'Settings',
-            active: pathname == `/${params.storeId}/settings`
+            active: pathname == `/${params.storeId}/settings`,
+            icon: <Bolt  size={18} />
+
         }
     ]
     return (
@@ -106,12 +112,12 @@ const MainNav = ({
                         <DropdownMenuLabel>Main menu</DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuGroup>
-                            {routes.map((route,index) => (
+                            {routes.map((route, index) => (
                                 <DropdownMenuItem key={route.href} >
-                                    <Link  href={route.href} key={route.href} className={cn("text-sm font-medium hover:text-primary", route.active ? 'text-black dark:text-white' : 'text-muted-foreground')}>
+                                    <Link href={route.href} key={route.href} className={cn("text-sm font-medium hover:text-primary", route.active ? 'text-black dark:text-white' : 'text-muted-foreground')}>
                                         {route.label}
                                     </Link>
-                                    <DropdownMenuShortcut></DropdownMenuShortcut>
+                                    <DropdownMenuShortcut>{route?.icon}</DropdownMenuShortcut>
                                 </DropdownMenuItem>
                             ))}
                         </DropdownMenuGroup>
