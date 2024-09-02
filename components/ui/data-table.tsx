@@ -79,16 +79,19 @@ export function DataTable<TData, TValue>({
                 />
                 {currentPath === 'orders' &&
                     <div className="flex items-center gap-2 w-full justify-between" >
+                        <div>
                         <SelectDataItem
-                            data={['products', 'phone']}
-                            setData={setSearchKeySelect}
-                            searchKeySelect={searchKeySelect}
-                            title=" Select filter"
-                        />
+                        
+                        data={['products', 'phone']}
+                        setData={setSearchKeySelect}
+                        searchKeySelect={searchKeySelect}
+                        title=" Select filter"
+                    />
+                        </div>
                         <div>
                             <Button
                                 title="Enable it to get a confirm modal before updating order completion."
-                                className={`${safeMood ? "text-white bg-black hover:bg-black" : "bg-white text-black hover:bg-white"} hover:bg-auto border `}
+                                className={`${safeMood ? "text-white bg-black hover:bg-black" : "bg-white text-black hover:bg-white"}  hover:bg-auto border `}
                                 onClick={() => { safeMood ? disableSafeMood() : enableSafeMood() }}
                             >
                                 Safe mood
