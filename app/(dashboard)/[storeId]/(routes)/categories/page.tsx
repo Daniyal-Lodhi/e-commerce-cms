@@ -8,7 +8,7 @@ export const metadata:Metadata = {
     title: 'Categories',
   }
 
-export const CategoryPage = async (
+const CategoryPage = async (
     { params }: { params: { storeId: string } }
 ) => {
     const categories = await prismadb.categories.findMany({

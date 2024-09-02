@@ -10,7 +10,7 @@ export const metadata:Metadata = {
     title: 'Billboards',
   }
 
-export const BillboardPage = async (
+const BillboardPage = async (
     { params }: { params: { storeId: string } }
 ) => {
     const billboards = await prismadb.billboards.findMany({

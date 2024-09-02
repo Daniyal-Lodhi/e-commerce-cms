@@ -9,7 +9,7 @@ export const metadata:Metadata = {
   }
 
 
-export const ProductsPage = async (
+const ProductsPage = async (
     { params }: { params: { storeId: string } }
 ) => {
     const products = await prismadb.product.findMany({

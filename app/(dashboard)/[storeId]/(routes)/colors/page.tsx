@@ -9,7 +9,7 @@ export const metadata:Metadata = {
   }
 
 
-export const ColorPage = async (
+const ColorPage = async (
     { params }: { params: { storeId: string } }
 ) => {
     const colors = await prismadb.color.findMany({

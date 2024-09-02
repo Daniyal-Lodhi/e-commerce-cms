@@ -8,7 +8,7 @@ export const metadata:Metadata = {
     title: 'Sizes',
   }
 
-export const SizePage = async (
+const SizePage = async (
     { params }: { params: { storeId: string } }
 ) => {
     const sizes = await prismadb.size.findMany({

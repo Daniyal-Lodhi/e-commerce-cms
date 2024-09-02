@@ -5,7 +5,7 @@ import { SettingsFormPage } from "./components/settings-form";
 import { Metadata } from "next";
 
 
-export const metadata: Metadata = {
+const metadata: Metadata = {
     title: 'Settings',
 }
 
