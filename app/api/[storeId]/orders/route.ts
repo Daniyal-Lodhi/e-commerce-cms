@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
-import { corsHeaders } from "../checkout/route";
 import prismadb from "@/lib/prismadb";
-import { connect } from "http2";
+import { corsHeaders } from "../../corsHeaders";
 
 
 //  This route is for cash on delivery order creation

@@ -2,13 +2,9 @@ import prismadb from "@/lib/prismadb";
 import { stripe } from "@/lib/stripe";
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
+import { corsHeaders } from "../../corsHeaders";
 
 
-export const corsHeaders = {
-    'Access-Control-Allow-Origin': '*', // Allows any origin
-    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS', // Allowed HTTP methods
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization', // Allowed headers
-};
 
 // 1. To ensure authorization for the preflight request made by browser from cross domain.
 export async function OPTIONS() {
