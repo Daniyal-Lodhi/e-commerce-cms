@@ -23,14 +23,14 @@ const OverviewCard: React.FC<OverviewCardProps> = ({
                 <CardTitle>
                     <div className='flex items-center gap-3' >
                         Overview
-                        <SelectDataItem 
-                        data={dataYears}
-                        title='Select Year'
-                        setData={setDataYear}
-                        latestYear={LatestYearInData}
+                        <SelectDataItem
+                            data={dataYears}
+                            title='Select Year'
+                            setData={setDataYear}
+                            latestYear={LatestYearInData}
                         />
                     </div>
-                    <div className=' mt-1 text-sm text-gray-700 font-normal ' >Seems like you have not made any sales yet.</div>
+                    {Object.keys(GraphRevenueData).length == 0 && <div className=' mt-1 text-sm text-gray-700 font-normal ' >Seems like you have not made any sales yet.</div>}
 
                 </CardTitle>
 

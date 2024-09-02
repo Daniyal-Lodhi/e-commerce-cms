@@ -51,7 +51,7 @@ const GetGraphRevenue = async (storeId: string) => {
             monthlyRevenue[year][month] = (monthlyRevenue[year][month] || 0) + revenueForOrder;
         }
     }
-    console.log(monthlyRevenue)
+    // console.log(monthlyRevenue)
     // graphData for month 
     let graphData: MonthWiseGraphData[] = [
         { name: "January", total: 0 },

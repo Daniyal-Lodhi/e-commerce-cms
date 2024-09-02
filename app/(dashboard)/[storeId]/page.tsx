@@ -14,7 +14,7 @@ import { redirect } from "next/navigation";
 
 
 
-const Store = async (
+export const Store = async (
     {params}: {params: {storeId: string} }
 ) => {
     const { userId } = auth();
