@@ -107,7 +107,7 @@ const UpdateOrderStatus: React.FC<UpdateOrderStatusProps> = ({
             <div>
                 {String(check)}
             </div>
-            { <Checkbox
+            { !freeze &&  <Checkbox
                 checked={check}
                 className='disabled:text-gray-500 m-0  '
                 title={check == true ? "" : "Marking complete will always set the paid status to true"}
