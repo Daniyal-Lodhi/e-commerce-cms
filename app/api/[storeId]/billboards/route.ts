@@ -71,7 +71,7 @@ export async function GET(req: Request,
         var billboards;
         if (isFeatured !== undefined) {
             let featured:boolean = isFeatured==='true'?true:false;
-            console.log(featured)
+            // console.log(featured)
             billboards = await prismadb.billboards.findMany({
                 where: {
                     storeId: params.storeId,

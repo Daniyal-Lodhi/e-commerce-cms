@@ -45,7 +45,6 @@ export const PATCH = async (req: Request,
                 const orderCreationTime = new Date(order.createdAt).getTime();
                 const currentTime = new Date().getTime();
                 const timeDiffInMinutes = (currentTime - orderCreationTime) / (60 * 1000);
-                console.log("hello")
                 if (timeDiffInMinutes < 30) {
                     await prismadb.order.update({
                         where: {

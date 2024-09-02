@@ -42,10 +42,10 @@ export function DataTable<TData, TValue>({
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
         []
     )
-    const {safeMood,enableSafeMood, disableSafeMood} = useSafeMood();
-    useEffect(()=>{
-console.log(safeMood)
-    },[safeMood])
+    const { safeMood, enableSafeMood, disableSafeMood } = useSafeMood();
+    useEffect(() => {
+        // console.log(safeMood)
+    }, [safeMood])
     const table = useReactTable({
         data,
         columns,
@@ -87,9 +87,9 @@ console.log(safeMood)
                         />
                         <div>
                             <Button
-                            title="Enable it to get a confirm modal before updating order completion."
-                            className={`${safeMood?"text-white bg-black hover:bg-black":"bg-white text-black hover:bg-white"} hover:bg-auto border `} 
-                            onClick={()=>{safeMood?disableSafeMood():enableSafeMood()}}
+                                title="Enable it to get a confirm modal before updating order completion."
+                                className={`${safeMood ? "text-white bg-black hover:bg-black" : "bg-white text-black hover:bg-white"} hover:bg-auto border `}
+                                onClick={() => { safeMood ? disableSafeMood() : enableSafeMood() }}
                             >
                                 Safe mood
                             </Button>

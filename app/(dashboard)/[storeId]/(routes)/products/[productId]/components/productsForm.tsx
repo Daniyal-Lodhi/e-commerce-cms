@@ -88,7 +88,7 @@ export const ProductFormPage: React.FC<ProductFormProps> = ({
             else {
                 res = await axios.post(`/api/${params.storeId}/products`, data)
             }
-            console.log(res.data)
+            // console.log(res.data)
             toast.success(toastMessage)
             router.push(`/${params.storeId}/products`)
             router.refresh(); // syncs changes in the router by refreshing it, as in this case synced the name of store after update.

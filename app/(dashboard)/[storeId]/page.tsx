@@ -32,7 +32,7 @@ export const Store = async (
     // console.log(params.storeId)
     const sales = await getSales(params.storeId);
     const GraphRevenueData = await GetGraphRevenue(params.storeId);
-    console.log(GraphRevenueData)
+    // console.log(GraphRevenueData)
 
     if (!store) {
         redirect('/');

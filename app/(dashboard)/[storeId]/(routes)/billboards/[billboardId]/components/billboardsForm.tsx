@@ -69,7 +69,7 @@ export const BillboardFormPage: React.FC<BillboardFormProps> = ({
             else {
                 res = await axios.post(`/api/${params.storeId}/billboards`, data)
             }
-            console.log(res.data)
+            // console.log(res.data)
             toast.success(toastMessage)
             router.push(`/${params.storeId}/billboards`)
             router.refresh(); // syncs changes in the router by refreshing it, as in this case synced the name of store after update.

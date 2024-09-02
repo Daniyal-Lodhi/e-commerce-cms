@@ -72,7 +72,7 @@ export const CategoryFormPage: React.FC<CategoryFormProps> = ({
             else {
                 res = await axios.post(`/api/${params.storeId}/categories`, data)
             }
-            console.log(res.data)
+            // console.log(res.data)
             toast.success(toastMessage)
             router.push(`/${params.storeId}/categories`)
             router.refresh(); // syncs changes in the router by refreshing it, as in this case synced the name of store after update.
