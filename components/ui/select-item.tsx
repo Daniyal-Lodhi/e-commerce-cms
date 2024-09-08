@@ -16,7 +16,7 @@ interface SelectDataItemProps {
   latestYear?: string
   searchKeySelect?: string
   title: string
-  disabled:boolean
+  disabled?:boolean
 }
 
 export const SelectDataItem: React.FC<SelectDataItemProps> = ({
