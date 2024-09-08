@@ -1,8 +1,6 @@
 import prismadb from "@/lib/prismadb";
 import { auth } from "@clerk/nextjs/server";
-import type { Metadata } from "next";
 import { redirect } from "next/navigation";
-import { useEffect } from "react";
 
 
 
@@ -24,9 +22,6 @@ export default async function RootLayout({
     redirect(`/${store.id}`)
   }
 
-  useEffect(()=>{
-
-  },[])
 
 
 
