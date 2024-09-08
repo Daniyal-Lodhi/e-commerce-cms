@@ -16,6 +16,7 @@ interface SelectDataItemProps {
   latestYear?: string
   searchKeySelect?: string
   title: string
+  disabled:boolean
 }
 
 export const SelectDataItem: React.FC<SelectDataItemProps> = ({
@@ -23,7 +24,8 @@ export const SelectDataItem: React.FC<SelectDataItemProps> = ({
   setData,
   latestYear,
   searchKeySelect,
-  title
+  title,
+  disabled
 }) => {
 
 
@@ -48,7 +50,6 @@ export const SelectDataItem: React.FC<SelectDataItemProps> = ({
     
   }
 
-
   useEffect(() => {
     Setmounted(true);
   }, [])
@@ -57,7 +58,7 @@ export const SelectDataItem: React.FC<SelectDataItemProps> = ({
     return null;
 
   return (
-    <Select onValueChange={handleChange} defaultValue={latestYear || searchKeySelect}     >
+    <Select disabled={disabled} onValueChange={handleChange} defaultValue={latestYear || searchKeySelect}     >
       <SelectTrigger className="w-[130px]">
         <SelectValue placeholder={title} />
       </SelectTrigger>

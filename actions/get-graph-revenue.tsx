@@ -86,30 +86,30 @@ const GetGraphRevenue = async (storeId: string) => {
             yearWiseGraphData[parseInt(i)][parseInt(mKey)].total = yearsOfMR[parseInt(mKey)]
         }
     }
-    // console.log(yearWiseGraphData);
+    console.log(yearWiseGraphData);
 
 
     return yearWiseGraphData;
 
 }
 
-const currentYear = new Date().getFullYear();
 
-export const dummyYearWiseData:YearWiseGraphData={
-    [currentYear]:[
-        { name: 'January', total: 0 },
-        { name: 'february', total: 0 },
-        { name: 'march', total: 0 },
-        { name: 'april', total: 0 },
-        { name: 'may', total: 0 },
-        { name: 'june', total: 0 },
-        { name: 'july', total: 0 },
-        { name: 'august', total: 0 },
-        { name: 'september', total: 0 },
-        { name: 'october', total: 0 },
-        { name: 'november', total: 0 },
-        { name: 'december', total: 0 }
-      ]
-}
+// const currentYear = new Date().getFullYear();
+// export const dummyYearWiseData:YearWiseGraphData={
+//     [currentYear]:[
+//         { name: 'January', total: 0 },
+//         { name: 'february', total: 0 },
+//         { name: 'march', total: 0 },
+//         { name: 'april', total: 0 },
+//         { name: 'may', total: 0 },
+//         { name: 'june', total: 0 },
+//         { name: 'july', total: 0 },
+//         { name: 'august', total: 0 },
+//         { name: 'september', total: 0 },
+//         { name: 'october', total: 0 },
+//         { name: 'november', total: 0 },
+//         { name: 'december', total: 0 }
+//       ]
+// }
 
 export default GetGraphRevenue;

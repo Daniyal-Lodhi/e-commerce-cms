@@ -5,7 +5,6 @@ import { ClerkProvider } from '@clerk/nextjs'
 import { ModalProvider } from "@/providers/modal-provider";
 import ToastProvider from "@/providers/toast-provider";
 import { ThemeProvider } from "@/components/theme-provider";
-import Head from "next/head";
 const inter = Inter({ subsets: ["latin"] });
 
 let title = "CMS";
@@ -24,6 +23,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <ClerkProvider>
       <html lang="en"

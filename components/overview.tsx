@@ -7,13 +7,15 @@ import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from 'recharts'
 interface OverviewProps {
   data: YearWiseGraphData
   year : number
+  disabled:boolean
 }
 
-const Overview: React.FC<OverviewProps> = ({ data,year }) => {
+const Overview: React.FC<OverviewProps> = ({ data,year,disabled }) => {
  
   return (
     <ResponsiveContainer width="100%" height={350} className=' pt-2' >
-      <BarChart
+      { disabled? <div className='h-full flex items-center justify-center   text-lg text-gray-500 ' >Seems like you have not made any sales yet.</div> :
+       <BarChart
         data={data[Number(year)]}
         margin={{ top: 20 }}
       >
@@ -33,7 +35,7 @@ const Overview: React.FC<OverviewProps> = ({ data,year }) => {
           tickFormatter={(value) => `PKR ${value}`}
         />
         <Bar dataKey="total" fill="#3498db" radius={[4, 4, 0, 0]} />
-      </BarChart>
+      </BarChart>}
     </ResponsiveContainer>
   )
 }

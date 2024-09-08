@@ -1,4 +1,4 @@
-import GetGraphRevenue, { dummyYearWiseData } from "@/actions/get-graph-revenue";
+import GetGraphRevenue from "@/actions/get-graph-revenue";
 import { getSales } from "@/actions/get-sales";
 import { getTotalRevenue } from "@/actions/get-total-revenue";
 import Currency from "@/components/currency";
@@ -62,7 +62,7 @@ const Store = async (
              {/* chart */}
                 <div className="mt-3" >
                    { Object.keys(GraphRevenueData).length!==0 ? <OverviewCard GraphRevenueData={GraphRevenueData} /> : 
-                   <OverviewCard GraphRevenueData={dummyYearWiseData} /> 
+                   <OverviewCard GraphRevenueData={{}} /> 
                    }
                 </div>
 

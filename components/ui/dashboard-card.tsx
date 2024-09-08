@@ -29,7 +29,7 @@ const DashboardCard:React.FC<DashboardCardProps> = ({
                 </div>
             </CardTitle>
         </CardHeader>
-        <CardContent className={cn('font-bold text-2xl',classname)} >
+        <CardContent className={cn(' text-xl',classname)} >
             {value}
         </CardContent>
 
