@@ -86,7 +86,7 @@ const GetGraphRevenue = async (storeId: string) => {
             yearWiseGraphData[parseInt(i)][parseInt(mKey)].total = yearsOfMR[parseInt(mKey)]
         }
     }
-    console.log(yearWiseGraphData);
+    // console.log(yearWiseGraphData);
 
 
     return yearWiseGraphData;

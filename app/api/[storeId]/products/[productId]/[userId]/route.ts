@@ -13,19 +13,19 @@ export async function POST(req: NextRequest, { params }: {
     if (!params.productId) {
         return new NextResponse("Product id is required", { status: 400 });
     }
-    if (!params.userId) {
+    if (params.userId == 'null' || !params.userId) {
         return new NextResponse("User id is required", { status: 400 });
     }
     try {
         const { liked } = await req.json();
-        // console.log(process.env.DATABASE_URL);
         const likedEntry = await prismadb.favourite.findUnique({
             where: {
-                userId_productId:{productId: params.productId,
-                    userId: params.userId}
+                userId_productId: {
+                    productId: params.productId,
+                    userId: params.userId
+                }
             }
         })
-        console.log(likedEntry)
         if (likedEntry) {
             await prismadb.favourite.update({
                 where: {
@@ -37,12 +37,11 @@ export async function POST(req: NextRequest, { params }: {
                     liked
                 }
             })
-            console.log('updated ==>', liked)
+            // console.log('updated ==>', liked)
             return new NextResponse(`Product ${liked ? "liked" : "disliked"} successfully`, { status: 200, headers: corsHeaders });
 
         }
         else {
-            console.log(params)
             await prismadb.favourite.create({
                 data: {
                     userId: params.userId,
@@ -50,7 +49,7 @@ export async function POST(req: NextRequest, { params }: {
                     liked
                 }
             })
-            console.log('created ==> ', liked)
+            // console.log('created ==> ', liked)
 
 
             return new NextResponse(`Product ${liked ? "liked" : "disliked"} successfully`, { status: 200, headers: corsHeaders });

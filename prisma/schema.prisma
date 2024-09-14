@@ -158,7 +158,7 @@ model Favourite {
   id        String  @id @default(uuid())
   productId String
   product   Product @relation("ProductToFavourites", fields: [productId], references: [id])
-  userId    String
+  userId    String 
   liked     Boolean @default(false)
   @@unique([userId, productId])
   @@index([productId,userId])

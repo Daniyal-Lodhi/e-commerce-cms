@@ -17,7 +17,7 @@ export const GET = async (req: Request,
         const { searchParams } = new URL(req.url);
 
         const status = searchParams.get('status') || undefined;
-        console.log(status);
+        // console.log(status);
 
 
         var orders;
