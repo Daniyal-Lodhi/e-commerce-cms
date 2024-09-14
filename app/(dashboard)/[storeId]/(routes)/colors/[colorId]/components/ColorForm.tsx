@@ -15,6 +15,7 @@ import toast from 'react-hot-toast'
 import axios from 'axios'
 import { useParams, useRouter } from 'next/navigation'
 import { Heading } from '@/components/heading'
+import ColorPicker from './color-picker'
 
 
 interface ColorFormProps {
@@ -33,6 +34,7 @@ export const ColorFormPage: React.FC<ColorFormProps> = ({
 }) => {
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [showColorPicker, setShowColorPicker] = useState(false);
     const params = useParams();
     const router = useRouter();
 
@@ -44,7 +46,7 @@ export const ColorFormPage: React.FC<ColorFormProps> = ({
     const form = useForm<ColorFormZ>({
         resolver: zodResolver(ColorSchema),
         defaultValues: {
-            value: initialData?.value || '',
+            value: initialData?.value || '#000000',
             name: initialData?.name || '',
         }
     })
@@ -52,6 +54,8 @@ export const ColorFormPage: React.FC<ColorFormProps> = ({
     const onSubmit = async (data: ColorFormZ) => {
 
         setLoading(true);
+        setShowColorPicker(false);
+        
 
 
         try {
@@ -136,13 +140,16 @@ export const ColorFormPage: React.FC<ColorFormProps> = ({
                                     <FormItem>
                                         <FormLabel>Value</FormLabel>
                                         <div className='flex flex-row w-auto space-x-2' >
-                                        <FormControl>
-                                            <Input disabled={loading} {...field} placeholder='Color value' />
-                                        </FormControl>
-                                        <div className='h-10 w-12 rounded-md '
-                                        style={{backgroundColor:field.value}}
-                                        />
+                                            <FormControl>
+                                                <Input disabled={loading} {...field} placeholder='Color value' />
+                                            </FormControl>
+                                            <button disabled={loading} onClick={()=>setShowColorPicker(showColorPicker?false:true)} type='button' className='h-10 w-12 rounded-md '
+                                                style={{ backgroundColor: field.value }}
+                                            />
                                         </div>
+                                        {  showColorPicker && <div aria-disabled={loading} className=' transition  flex justify-end' >
+                                            <ColorPicker   setValue={field.onChange} />
+                                        </div>}
                                         <FormMessage />
                                     </FormItem>
                                 )}

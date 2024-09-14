@@ -132,7 +132,30 @@ export async function GET(req: Request,
                 category:true
             }
         })
+        const favouriteCounts = await prismadb.favourite.groupBy({
+            by: ['productId'],
+            _count: {
+                id: true, // Count the number of favourites
+            },
+            where: {
+                productId: {
+                    in: products.map(product => product.id)
+                }
+            }
+        });
 
+        // Create a map of productId to favourite count for easier lookup
+        // const favouriteCountMap = favouriteCounts.reduce((acc, fav) => {
+        //     acc[fav.productId] = fav._count.id;
+        //     return acc;
+        // }, {} as Record<string, number>);
+
+        // // Combine products with their respective favourite count
+        // const productsWithFavouriteCount = products.map(product => ({
+        //     ...product,
+        //     favouriteCount: favouriteCountMap[product.id] || 0 // Default to 0 if no favourites
+        // }));
+        // console.log(process.env.DATABASE_URL)
         return NextResponse.json(products, { status: 200 });
 
     } catch (error) {

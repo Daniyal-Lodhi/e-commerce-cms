@@ -4,34 +4,37 @@ import prismadb from "@/lib/prismadb"
 import { auth } from "@clerk/nextjs/server"
 import { NextResponse } from "next/server"
 
-export const GET = async (req: Request,
-    { params }: { params: { productId: string } }
-) => {
 
-    try {
-        if (!params.productId) {
-            return new NextResponse("Product id is required", { status: 400 })
-        }
+// moved to ==>  products/produtid/userid
 
-        const product = await prismadb.product.findUnique({
-            where: {
-                id: params.productId
-            },
-            include: {
-                images: true,
-                category: true,
-                size: true,
-                color: true,
-            }
-        })
+// export const GET = async (req: Request,
+//     { params }: { params: { productId: string } }
+// ) => {
+
+//     try {
+//         if (!params.productId) {
+//             return new NextResponse("Product id is required", { status: 400 })
+//         }
+
+//         const product = await prismadb.product.findUnique({
+//             where: {
+//                 id: params.productId
+//             },
+//             include: {
+//                 images: true,
+//                 category: true,
+//                 size: true,
+//                 color: true,
+//             }
+//         })
 
 
-        return NextResponse.json(product, { status: 200 });
-    } catch (error) {
-        console.log("[PRODUCT_GET]", error);
-        return new NextResponse("Internal error", { status: 500 });
-    }
-}
+//         return NextResponse.json(product, { status: 200 });
+//     } catch (error) {
+//         console.log("[PRODUCT_GET]", error);
+//         return new NextResponse("Internal error", { status: 500 });
+//     }
+// }
 
 
 export const PATCH = async (

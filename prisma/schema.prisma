@@ -9,19 +9,19 @@ datasource db {
 }
 
 model Store {
-  id         String       @id @default(uuid())
-  name       String
-  userId     String
+  id          String       @id @default(uuid())
+  name        String
+  userId      String
   frontendUrl String?
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @default(now())
-  billboards Billboards[] @relation("StoreToBillboards")
-  categories Categories[] @relation("StoreToCategories")
-  products   Product[]    @relation("StoreToProducts")
-  orders     Order[]      @relation("StoreToOrders")
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @default(now())
+  billboards  Billboards[] @relation("StoreToBillboards")
+  categories  Categories[] @relation("StoreToCategories")
+  products    Product[]    @relation("StoreToProducts")
+  orders      Order[]      @relation("StoreToOrders")
 
-  sizes    Size[]    @relation("StoreToSizes")
-  color    Color[]   @relation("StoreToColor")
+  sizes Size[]  @relation("StoreToSizes")
+  color Color[] @relation("StoreToColor")
 }
 
 model Billboards {
@@ -97,11 +97,11 @@ model Product {
   color       Color        @relation("ColorToProducts", fields: [colorId], references: [id])
   images      Image[]
   orderItems  OrderItems[] @relation("ProductToOrderItems")
+  favourite   Favourite[]  @relation("ProductToFavourites")
   isArchived  Boolean      @default(false)
   isFeatured  Boolean      @default(false)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @default(now())
 
   @@index([storeId])
   @@index([categoryId])
@@ -152,4 +152,14 @@ model OrderItems {
 
   @@index([orderId])
   @@index([productId])
+}
+
+model Favourite {
+  id        String  @id @default(uuid())
+  productId String
+  product   Product @relation("ProductToFavourites", fields: [productId], references: [id])
+  userId    String
+  liked     Boolean @default(false)
+  @@unique([userId, productId])
+  @@index([productId,userId])
 }
