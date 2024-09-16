@@ -32,7 +32,7 @@ export default async function DashboardLayout({ children, params }: {
             <div className="relative z-[100]">
                 <Navbar />
             </div>
-            {/* <LoaderProvider /> */}
+            <LoaderProvider />
             {children}
         </>
     );
