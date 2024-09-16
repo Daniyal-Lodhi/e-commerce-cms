@@ -1,18 +1,28 @@
 'use client'
 
-import { MagicSpinner } from "react-spinners-kit";
+import { useLoading } from "@/hooks/use-loader";
+import { useEffect, useState } from "react";
+import PropagateLoader from "react-spinners/ClipLoader";
 
 const LoaderProvider = () => {
+    const [mounted, setMounted] = useState(false);
+    const { loading } = useLoading();
+    useEffect(() => {
+        setMounted(true);
+    }, [])
+    if (!mounted) {
+        return null
+    }
     return (
+        <>
+            {loading && <div className="fixed   inset-0 z-50 flex items-center justify-center bg-white">
+                <PropagateLoader
+                    className="text-black "
+                    size={50}
 
-        <div className="overflow-hidden" >
-            <div className=" fixed   inset-0 overflow-hidden z-50 ">
-                <div className=" flex h-full w-full items-center justify-center" >
-                    <MagicSpinner size={40} color="black" />
-                </div>
-            </div>
-        </div>
-
+                />
+            </div>}
+        </>
     );
 }
 

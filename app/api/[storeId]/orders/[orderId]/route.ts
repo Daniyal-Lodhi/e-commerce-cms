@@ -33,7 +33,7 @@ export const PATCH = async (req: Request,
                     },
                     data: {
                         completed,
-                        isPaid: true,
+                        isPaid: true,  
                         completedAt: new Date()
                     }
                 })

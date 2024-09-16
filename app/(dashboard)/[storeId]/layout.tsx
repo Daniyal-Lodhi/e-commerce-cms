@@ -1,38 +1,39 @@
 import { Navbar } from "@/components/navbar";
 import prismadb from "@/lib/prismadb";
+import LoaderProvider from "@/providers/loader-provider";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import React from "react";
 
-
-
-export default async function DashboardLayout({ children,params }: {
+export default async function DashboardLayout({ children, params }: {
     children: React.ReactNode
-    params:{storeId:string}
+    params: { storeId: string }
 }) {
-
     const { userId } = auth();
-    if(!userId){
-        redirect('/sign-in')
+    if (!userId) {
+        redirect('/sign-in');
     }
-    // console.log(userId)
-    // console.log(params.storeId) 
 
     const store = await prismadb.store.findFirst({
-        where:{
+        where: {
             userId,
-            id:params.storeId
+            id: params.storeId
         }
-    })
-    
+    });
 
-    if(!store){
+    if (!store) {
         redirect('/');
     }
-    return(
+    console.log(typeof window)
+
+    return (
         <>
-        <Navbar />
-        {children}
+            {/* Navbar should remain on top of everything */}
+            <div className="relative z-[100]">
+                <Navbar />
+            </div>
+            {/* <LoaderProvider /> */}
+            {children}
         </>
-    )
+    );
 }

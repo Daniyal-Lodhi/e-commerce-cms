@@ -38,7 +38,8 @@ const Store = async (
         redirect('/');
     }
     return (
-        <div className="px-4 sm:px-6 py-4" >
+        <>
+        { totalRevenue!=null && sales!=null && GraphRevenueData!=null && <div className="px-4 sm:px-6 py-4" >
             <div className="border-b pb-6 pt-2 mb-2 " >
                 <Heading title="Dashboard" description={"Overview of your dashboard."} />
             </div>
@@ -67,7 +68,8 @@ const Store = async (
                 </div>
 
             
-        </div>
+        </div>}
+        </>
     )
 }
 

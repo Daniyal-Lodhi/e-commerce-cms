@@ -60,6 +60,18 @@ export async function POST(request: Request,
 
             }
         });
+        await prismadb.product.updateMany({
+            where:{
+                id:{
+                    in:productIds
+                }
+            },
+            data:{
+                quantity:{
+                    decrement:1
+                },
+            }
+        })
 
         return new NextResponse("Order placed successfully", { status: 200,headers:corsHeaders })
     } catch (error) {
