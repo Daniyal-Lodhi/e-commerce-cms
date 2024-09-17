@@ -1,4 +1,4 @@
-import PropagateLoader from "react-spinners/ClipLoader";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const LoaderProvider = () => {
     {/* loader for default loading fallback during  */ }
@@ -6,12 +6,12 @@ const LoaderProvider = () => {
     return (
         <>
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-white">
-                <PropagateLoader
+                <ClipLoader
                     className="text-black "
                     size={50}
                 />
             </div>
-        </>
+        </> 
     );
 }
 

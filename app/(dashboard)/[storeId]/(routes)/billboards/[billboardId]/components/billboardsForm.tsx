@@ -14,11 +14,9 @@ import AlertModal from '@/components/Modals/alert-modal'
 import toast from 'react-hot-toast'
 import axios from 'axios'
 import { useParams, useRouter } from 'next/navigation'
-import { ApiAlert } from '@/components/ui/api-alert'
-import { useOrigin } from '@/hooks/use-origin'
 import { Heading } from '@/components/heading'
-import UploadImage from '@/app/(dashboard)/[storeId]/(routes)/billboards/[billboardId]/components/upload-image'
 import { Checkbox } from '@/components/ui/checkbox'
+import UploadImage from '@/components/upload-image'
 
 
 interface BillboardFormProps {

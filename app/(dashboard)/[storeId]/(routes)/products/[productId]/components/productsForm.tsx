@@ -13,11 +13,10 @@ import AlertModal from '@/components/Modals/alert-modal'
 import toast from 'react-hot-toast'
 import axios from 'axios'
 import { useParams, useRouter } from 'next/navigation'
-import { useOrigin } from '@/hooks/use-origin'
 import { Heading } from '@/components/heading'
-import UploadImage from './upload-image'
 import { SelectItem, SelectTrigger, Select, SelectContent, SelectValue } from '@/components/ui/select'
 import { Checkbox } from '@/components/ui/checkbox'
+import UploadImage from '@/components/upload-image'
 
 
 
@@ -142,18 +141,21 @@ export const ProductFormPage: React.FC<ProductFormProps> = ({
             <Form {...form} >
                 <form onSubmit={form.handleSubmit(onSubmit)} className='w-full space-y-4 sm:space-y-8' >
                     <FormField
-
                         control={form.control}
                         name='images'
                         render={({ field }) => (
-                            <FormItem >
+                            <FormItem>
                                 {/* <div>{field.value.length}</div> */}
                                 <FormLabel>Product image</FormLabel>
-                                <FormControl >
+                                <FormControl>
                                     <UploadImage
                                         value={field.value.map((image) => image.imageUrl)}
                                         disabled={loading}
-                                        onChange={(imageUrl) => field.onChange([...field.value, { imageUrl }])}
+                                        onChange={(imageUrl) => {
+                                            const newValue = [...field.value, { imageUrl }];
+                                            field.onChange((field.value = newValue));
+
+                                        }}
                                         onRemove={(url) => field.onChange([...field.value.filter((currentUrl) => url !== currentUrl.imageUrl)])}
                                     />
                                 </FormControl>
@@ -267,7 +269,7 @@ export const ProductFormPage: React.FC<ProductFormProps> = ({
                                         </FormControl>
                                         <SelectContent>
                                             {color && color.map((color) => (
-                                                <SelectItem  key={color.id} value={color.id} >
+                                                <SelectItem key={color.id} value={color.id} >
                                                     <div className='flex w-full space-x-3 justify-between  items-center' >
                                                         <div>{color.name}</div>
                                                         <div style={{ backgroundColor: color.value }} className='rounded-full h-4 w-4' ></div>
