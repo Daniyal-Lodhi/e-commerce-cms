@@ -1,5 +1,5 @@
 import prismadb from "@/lib/prismadb";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export const PATCH = async (req: Request,
     { params }: {
@@ -33,7 +33,7 @@ export const PATCH = async (req: Request,
                     },
                     data: {
                         completed,
-                        isPaid: true,  
+                        isPaid: true,
                         completedAt: new Date()
                     }
                 })
@@ -84,6 +84,46 @@ export const PATCH = async (req: Request,
         }
     } catch (error) {
         console.log("[ORDER_PATCH:]", error);
-        return new NextResponse("Some Error occured");
+        return new NextResponse("Some Error occured",{status:500});
+    }
+}
+
+export const GET = async (req: NextRequest, {
+    params
+}: {
+    params: { orderId: string }
+}) => {
+    const {orderId} = params;
+    if(!orderId){
+        return new NextResponse(`Order is is required`,{status:400})
+    }
+    try {
+        const order = await prismadb.order.findUnique({
+            where:{
+                id:orderId
+            },include:{
+                orderItems:{
+                    include:{
+                        product:{
+                            include:{
+                                images:true,
+                                color:true,
+                                size:true,
+                                category:true
+                            }
+                        }
+                    }
+                }
+            }
+        })
+        order && order.orderItems.sort((a, b) => {
+            return (a.isRated === b.isRated) ? 0 : a.isRated ? 1 : -1;
+        });
+        // console.log(order)
+        return NextResponse.json(order)
+
+    } catch (error) {
+        console.log("[ORDER_GET:]", error);
+        return new NextResponse("Some Error occured",{status:500});
     }
 }

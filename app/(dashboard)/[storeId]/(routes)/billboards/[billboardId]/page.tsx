@@ -2,7 +2,6 @@
 import { Metadata } from "next";
 import BillboardFormPage from "./components/billboardsForm"
 import prismadb from "@/lib/prismadb";
-import { usePathname } from "next/navigation";
 
 
 

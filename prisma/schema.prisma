@@ -98,6 +98,7 @@ model Product {
   images      Image[]
   orderItems  OrderItems[] @relation("ProductToOrderItems")
   favourite   Favourite[]  @relation("ProductToFavourites")
+  ratings     Rating[]     @relation("ProductToRatings")
   isArchived  Boolean      @default(false)
   isFeatured  Boolean      @default(false)
   createdAt   DateTime     @default(now())
@@ -134,6 +135,7 @@ model Order {
   phoneNumber String?
   address     String?
   orderItems  OrderItems[] @relation("OrderToOrderItems")
+  rating      Rating[]     @relation("OrderToRatings")
   isPaid      Boolean
   completed   Boolean      @default(false)
   createdAt   DateTime     @default(now())
@@ -149,7 +151,9 @@ model OrderItems {
   order     Order   @relation("OrderToOrderItems", fields: [orderId], references: [id])
   productId String
   product   Product @relation("ProductToOrderItems", fields: [productId], references: [id])
+  isRated   Boolean @default(false)
 
+  @@unique([orderId, productId])
   @@index([orderId])
   @@index([productId])
 }
@@ -158,8 +162,25 @@ model Favourite {
   id        String  @id @default(uuid())
   productId String
   product   Product @relation("ProductToFavourites", fields: [productId], references: [id])
-  userId    String 
+  userId    String
   liked     Boolean @default(false)
+
   @@unique([userId, productId])
-  @@index([productId,userId])
+  @@index([productId, userId])
+}
+
+model Rating {
+  id        String  @id @default(uuid())
+  username  String
+  productId String
+  orderId   String
+  order     Order   @relation("OrderToRatings", fields: [orderId], references: [id])
+  product   Product @relation("ProductToRatings", fields: [productId], references: [id])
+  userId    String
+  stars     Decimal
+  comment   String?
+  
+
+  @@unique([orderId, productId])
+  @@index([productId])
 }
