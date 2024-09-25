@@ -62,7 +62,6 @@ export async function GET(req: Request,
 ) {
     const { searchParams } = new URL(req.url)
     let isFeatured = searchParams.get("featured") || undefined
-    
     try {
         
         if (!params.storeId) {

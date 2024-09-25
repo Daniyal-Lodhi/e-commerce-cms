@@ -74,6 +74,7 @@ export const DELETE = async (
 ) => {
     try {
         const { userId } = auth();
+        // console.log("hello")
 
 
         if (!userId) {
@@ -84,11 +85,12 @@ export const DELETE = async (
         }
         const storeByUserId = await prismadb.store.findFirst({
             where: {
-                id: "params.storeId",
+                id: params.storeId,
                 userId
             }
         })
         if (!storeByUserId) {
+            
             return new NextResponse("You are not Authorized for make changes in this store", { status: 403 });
         }
 

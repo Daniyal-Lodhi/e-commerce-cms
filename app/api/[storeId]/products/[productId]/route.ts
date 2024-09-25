@@ -124,7 +124,7 @@ export const PATCH = async (
             },
         })
 
-        const product = await prismadb.product.update({
+        await prismadb.product.update({
             where: {
                 id: params.productId
             },

@@ -24,7 +24,7 @@ export default async function DashboardLayout({ children, params }: {
     if (!store) {
         redirect('/');
     }
-    console.log(typeof window)
+    // console.log(typeof window)
 
     return (
         <>

@@ -132,17 +132,44 @@ export async function GET(req: Request,
                 category:true
             }
         })
-        const favouriteCounts = await prismadb.favourite.groupBy({
-            by: ['productId'],
-            _count: {
-                id: true, // Count the number of favourites
-            },
-            where: {
-                productId: {
-                    in: products.map(product => product.id)
+
+        const productsRating = await prismadb.rating.findMany({
+            where:{
+                productId:{
+                    in: products.map((product)=>product.id)
                 }
             }
-        });
+        })
+        const productsRatingMap = productsRating.reduce((acc, item) => {
+            // Ensure that acc[item.productId] is initialized
+            if (!acc[item.productId]) {
+                acc[item.productId] = {
+                    stars: 0,
+                    count: 0
+                };
+            }
+        
+            acc[item.productId] = {
+                stars: Number(acc[item.productId].stars) + Number(item.stars),
+                count: acc[item.productId].count + 1
+            };
+        
+            return acc;
+        }, {} as Record<string, any>);
+        
+
+        // commented out code moved to product/productId/userId 
+        // const favouriteCounts = await prismadb.favourite.groupBy({
+        //     by: ['productId'],
+        //     _count: {
+        //         id: true, // Count the number of favourites
+        //     },
+        //     where: {
+        //         productId: {
+        //             in: products.map(product => product.id)
+        //         }
+        //     }
+        // });
 
         // Create a map of productId to favourite count for easier lookup
         // const favouriteCountMap = favouriteCounts.reduce((acc, fav) => {
@@ -150,13 +177,13 @@ export async function GET(req: Request,
         //     return acc;
         // }, {} as Record<string, number>);
 
-        // // Combine products with their respective favourite count
-        // const productsWithFavouriteCount = products.map(product => ({
-        //     ...product,
-        //     favouriteCount: favouriteCountMap[product.id] || 0 // Default to 0 if no favourites
-        // }));
+        // Combine products with their respective favourite count
+        const productsWithProductsRating = products.map(product => ({
+            ...product,
+            productRating: productsRatingMap[product.id] || {} // Default to 0 if no favourites
+        }));
         // console.log(process.env.DATABASE_URL)
-        return NextResponse.json(products, { status: 200 });
+        return NextResponse.json(productsWithProductsRating, { status: 200 });
 
     } catch (error) {
         console.log('[PRODUCT_GET:]', error);

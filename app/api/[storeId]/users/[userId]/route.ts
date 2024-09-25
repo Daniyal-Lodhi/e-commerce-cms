@@ -29,7 +29,7 @@ export async function GET(req: NextRequest, { params }: {
         return  NextResponse.json(favProducts,{status:200}) ;
 
     } catch (error) {
-        console.log('[ADD_TO_FAV_POST:]', error)
+        console.log('[GET_FAV_POST:]', error)
         return new NextResponse("Internal server error", { status: 500 });
 
     }

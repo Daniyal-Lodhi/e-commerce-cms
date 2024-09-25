@@ -18,7 +18,7 @@ export async function POST (request:NextRequest) {
             process.env.STRIPE_WEBHOOK_SECRET!
         )
     } catch (error:any) {
-        console.log()
+        console.log(error)
         return new NextResponse(`Webhook error: ,${error.message}`,{status:400});
     }
 

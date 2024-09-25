@@ -35,6 +35,8 @@ export const PATCH = async (
         const body = await req.json();
         const { userId } = auth();
         const { label, imageUrl,featured } = body;
+        // console.log(process.env.DATABASE_URL)
+
 
 
         if (!userId) {

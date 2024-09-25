@@ -97,14 +97,43 @@ export const GET = async (req: Request,
             }
         })
         var likedProduct;
+        const productRating = await prismadb.rating.findMany({
+            where: {
+                productId: params.productId
+            }
+        })
+
+        let productRatingObj = productRating.reduce((acc, product) => {
+            if (product.comment) {
+                acc['stars'] = acc['stars'] + Number(product.stars)
+                acc['count'] = acc['count'] + 1
+                acc['comments'] = [...acc['comments'], {
+                    'comment': product?.comment,
+                    'commentedBy': product.username,
+                    'stars': product.stars,
+                }]
+            }
+            return acc
+        }, {
+            stars: 0,
+            comments: [],
+            count: 0,
+        } as Record<string, any>)
         if (isLiked) {
-            likedProduct = { ...product, liked: true }
+            // with rating
+            likedProduct = { ...product, liked: true, productRating: productRatingObj }
             return NextResponse.json(likedProduct, { status: 200 });
 
         }
 
 
-        return NextResponse.json(product, { status: 200 });
+        let productWithRatings = {
+            ...product,
+            productRating: productRatingObj
+        }
+
+
+        return NextResponse.json(productWithRatings, { status: 200 });
     } catch (error) {
         console.log("[PRODUCT_GET]", error);
         return new NextResponse("Internal error", { status: 500 });
