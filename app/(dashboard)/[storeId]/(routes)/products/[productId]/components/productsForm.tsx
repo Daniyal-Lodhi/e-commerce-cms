@@ -79,6 +79,8 @@ export const ProductFormPage: React.FC<ProductFormProps> = ({
 
     const onSubmit = async (data: ProductFormZ) => {
         setLoading(true);
+        console.log(data);
+        // return
         try {
             var res;
             if (initialData) {
@@ -145,18 +147,28 @@ export const ProductFormPage: React.FC<ProductFormProps> = ({
                         name='images'
                         render={({ field }) => (
                             <FormItem>
-                                {/* <div>{field.value.length}</div> */}
                                 <FormLabel>Product image</FormLabel>
                                 <FormControl>
                                     <UploadImage
                                         value={field.value.map((image) => image.imageUrl)}
                                         disabled={loading}
-                                        onChange={(imageUrl) => {
-                                            const newValue = [...field.value, { imageUrl }];
-                                            field.onChange((field.value = newValue));
-
+                                        onChange={(imageUrls) => {
+                                            // always read the CURRENT value, not the closure's stale one
+                                            const current = form.getValues('images') ?? [];
+                                            const newImages = imageUrls.map((imageUrl) => ({ imageUrl }));
+                                            form.setValue('images', [...current, ...newImages], {
+                                                shouldValidate: true,
+                                                shouldDirty: true,
+                                            });
                                         }}
-                                        onRemove={(url) => field.onChange([...field.value.filter((currentUrl) => url !== currentUrl.imageUrl)])}
+                                        onRemove={(url) => {
+                                            const current = form.getValues('images') ?? [];
+                                            form.setValue(
+                                                'images',
+                                                current.filter((image) => image.imageUrl !== url),
+                                                { shouldValidate: true, shouldDirty: true }
+                                            );
+                                        }}
                                     />
                                 </FormControl>
                                 <FormMessage />
@@ -380,7 +392,7 @@ export const ProductFormPage: React.FC<ProductFormProps> = ({
                                     <div className='flex flex-col space-y-1 leading-none'>
                                         <FormLabel>Archived</FormLabel>
                                         <FormDescription className='text-sm text-slate-700'>
-                                            This product will appear on the home page
+                                            This product will not appear anywhere in the store
                                         </FormDescription>
                                     </div>
 
