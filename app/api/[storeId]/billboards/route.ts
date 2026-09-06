@@ -24,6 +24,7 @@ export async function POST(req: Request,
         if (!label) {
             return new NextResponse("label is required", { status: 400 })
         }
+        let isFeatured = body.featured || false;
 
         const storeByUserId = prismadb.store.findFirst({
             where: {
@@ -41,6 +42,7 @@ export async function POST(req: Request,
             data: {
                 storeId: params.storeId,
                 label,
+                featured: isFeatured,
                 imageUrl
             }
         })

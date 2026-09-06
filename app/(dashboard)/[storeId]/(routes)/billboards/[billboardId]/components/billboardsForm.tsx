@@ -57,6 +57,7 @@ export const BillboardFormPage: React.FC<BillboardFormProps> = ({
 
         setLoading(true);
 
+        console.log(data)
 
         try {
             var res;
