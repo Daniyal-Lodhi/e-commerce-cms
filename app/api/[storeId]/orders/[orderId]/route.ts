@@ -106,7 +106,11 @@ export const GET = async (req: NextRequest, {
                     include:{
                         product:{
                             include:{
-                                images:true,
+                                images: {
+                                    orderBy: {
+                                        position: 'asc'
+                                    }
+                                },
                                 color:true,
                                 size:true,
                                 category:true

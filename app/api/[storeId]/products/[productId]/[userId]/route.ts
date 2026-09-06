@@ -90,7 +90,11 @@ export const GET = async (req: Request,
                 id: params.productId
             },
             include: {
-                images: true,
+                images: {
+                    orderBy: {
+                        position: 'asc'
+                    }
+                },
                 category: true,
                 size: true,
                 color: true,

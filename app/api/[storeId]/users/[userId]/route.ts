@@ -21,7 +21,11 @@ export async function GET(req: NextRequest, { params }: {
                         category:true,
                         size:true,
                         color:true,
-                        images:true
+                        images: {
+                            orderBy: {
+                                position: 'asc'
+                            }
+                        }
                     }
                 }
             }

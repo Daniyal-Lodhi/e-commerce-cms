@@ -21,7 +21,11 @@ const ProductPage = async ({params}:{
             id: params.productId
         },
         include:{
-            images:true ,
+            images: {
+                orderBy: {
+                    position: 'asc'
+                }
+            },
         }
     })
    const productJson = JSON.parse(JSON.stringify(product)) ;

@@ -77,7 +77,10 @@ export async function POST(req: Request,
                 images: {
                     createMany: {
                         data: [
-                            ...images.map((image: { url: string }) => image)
+                            ...images.map((image: { imageUrl: string }, position: number) => ({
+                                imageUrl: image.imageUrl,
+                                position,
+                            }))
                         ]
                     }
                 }
@@ -126,7 +129,11 @@ export async function GET(req: Request,
                 isArchived:false
             },
             include:{
-                images: true,
+                images: {
+                    orderBy: {
+                        position: 'asc'
+                    }
+                },
                 size:true,
                 color:true,
                 category:true

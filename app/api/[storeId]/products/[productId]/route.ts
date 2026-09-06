@@ -132,7 +132,10 @@ export const PATCH = async (
                 images: {
                     createMany: {
                         data: [
-                            ...images.map((image: { url: string }) => image)
+                            ...images.map((image: { imageUrl: string }, position: number) => ({
+                                imageUrl: image.imageUrl,
+                                position,
+                            }))
                         ]
                     }
                 }

@@ -150,16 +150,33 @@ export const ProductFormPage: React.FC<ProductFormProps> = ({
                                 <FormLabel>Product image</FormLabel>
                                 <FormControl>
                                     <UploadImage
+                                    allowMultiple={true}
                                         value={field.value.map((image) => image.imageUrl)}
                                         disabled={loading}
                                         onChange={(imageUrls) => {
-                                            // always read the CURRENT value, not the closure's stale one
                                             const current = form.getValues('images') ?? [];
-                                            const newImages = imageUrls.map((imageUrl) => ({ imageUrl }));
-                                            form.setValue('images', [...current, ...newImages], {
-                                                shouldValidate: true,
-                                                shouldDirty: true,
-                                            });
+                                            const currentUrls = current.map((img) => img.imageUrl);
+
+                                            const isReorder =
+                                                imageUrls.length === currentUrls.length &&
+                                                imageUrls.every((url) => currentUrls.includes(url));
+
+                                            if (isReorder) {
+                                                // pure reorder — REPLACE, don't append
+                                                const reordered = imageUrls.map((url) => ({ imageUrl: url }));
+                                                form.setValue('images', reordered, {
+                                                    shouldValidate: true,
+                                                    shouldDirty: true,
+                                                });
+                                            } else {
+                                                // genuine new upload — append only the truly new ones
+                                                const newUrls = imageUrls.filter((url) => !currentUrls.includes(url));
+                                                const newImages = newUrls.map((imageUrl) => ({ imageUrl }));
+                                                form.setValue('images', [...current, ...newImages], {
+                                                    shouldValidate: true,
+                                                    shouldDirty: true,
+                                                });
+                                            }
                                         }}
                                         onRemove={(url) => {
                                             const current = form.getValues('images') ?? [];

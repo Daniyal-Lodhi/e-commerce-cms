@@ -132,11 +132,11 @@ export const BillboardFormPage: React.FC<BillboardFormProps> = ({
                                         <UploadImage
                                             value={field.value ? [field.value] : []}
                                             disabled={loading}
-                                            onChange={(url) => {
-                                                // console.log(url)
-                                                field.onChange(url)
+                                            onChange={(imageUrls) => {
+                                                // billboard only supports one image — use the latest upload
+                                                const latestUrl = imageUrls[imageUrls.length - 1];
+                                                field.onChange(latestUrl);
                                             }}
-
                                             onRemove={() => field.onChange("")}
                                         />
                                     </FormControl>
@@ -170,7 +170,7 @@ export const BillboardFormPage: React.FC<BillboardFormProps> = ({
                                     <FormItem className='flex items-start space-x-3 p-4 border rounded-md'>
                                         <FormControl>
                                             <Checkbox
-                                            disabled={loading}
+                                                disabled={loading}
                                                 checked={field.value}
                                                 onCheckedChange={field.onChange}
                                                 className='mt-2' // Adjust height and width if needed
