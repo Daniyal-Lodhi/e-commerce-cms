@@ -33,8 +33,8 @@ interface CategoryFormProps {
 }
 
 const CategorySchema = z.object({
-    name: z.string().min(1),
-    billboardId: z.string().min(1),
+    name: z.string().min(1,{ message: "Name is required" }),
+    billboardId: z.string().min(1,{ message: "Billboard is required" }),
 })
 type CategoryFormZ = z.infer<typeof CategorySchema>;
 
@@ -134,7 +134,7 @@ export const CategoryFormPage: React.FC<CategoryFormProps> = ({
                                 control={form.control}
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Label</FormLabel>
+                                        <FormLabel>Label <span className='text-rose-500'>*</span> </FormLabel>
                                         <FormControl>
                                             <Input disabled={loading} {...field} placeholder='Category name' />
                                         </FormControl>
@@ -148,7 +148,7 @@ export const CategoryFormPage: React.FC<CategoryFormProps> = ({
                                 control={form.control}
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Billboard</FormLabel>
+                                        <FormLabel>Billboard <span className='text-rose-500'>*</span> </FormLabel>
                                         <Select
                                             disabled={loading}
                                             onValueChange={field.onChange}

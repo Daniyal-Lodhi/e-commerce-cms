@@ -24,8 +24,8 @@ interface BillboardFormProps {
 }
 
 const BillboardSchema = z.object({
-    label: z.string().min(1),
-    imageUrl: z.string().min(1),
+    label: z.string().min(1, { message: "Label is required" }),
+    imageUrl: z.string().min(1, { message: "Image is required" }),
     featured: z.boolean()
 })
 type BillboardFormZ = z.infer<typeof BillboardSchema>;
@@ -151,7 +151,7 @@ export const BillboardFormPage: React.FC<BillboardFormProps> = ({
                                 control={form.control}
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Label</FormLabel>
+                                        <FormLabel>Label <span className='text-rose-500'>*</span> </FormLabel>
                                         <FormControl>
                                             <Input disabled={loading} {...field} placeholder='Billboard name' />
                                         </FormControl>

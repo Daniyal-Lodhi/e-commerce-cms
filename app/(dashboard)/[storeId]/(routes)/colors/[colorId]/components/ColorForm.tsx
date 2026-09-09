@@ -23,8 +23,8 @@ interface ColorFormProps {
 }
 
 const ColorSchema = z.object({
-    value: z.string().min(1),
-    name: z.string().min(1),
+    value: z.string().min(1,{ message: "Value is required" }),
+    name: z.string().min(1,{ message: "Name is required" }),
 })
 type ColorFormZ = z.infer<typeof ColorSchema>;
 
@@ -125,7 +125,7 @@ export const ColorFormPage: React.FC<ColorFormProps> = ({
                                 control={form.control}
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Name</FormLabel>
+                                        <FormLabel>Name <span className='text-rose-500'>*</span> </FormLabel>
                                         <FormControl>
                                             <Input disabled={loading} {...field} placeholder='Color name' />
                                         </FormControl>
@@ -138,18 +138,18 @@ export const ColorFormPage: React.FC<ColorFormProps> = ({
                                 control={form.control}
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Value</FormLabel>
-                                        <div className='flex flex-row w-auto space-x-2' >
+                                        <FormLabel>Value <span className='text-rose-500'>*</span> </FormLabel>
+                                        <div className='relative flex flex-row w-auto space-x-2' >
                                             <FormControl>
                                                 <Input disabled={loading} {...field} placeholder='Color value' />
                                             </FormControl>
                                             <button disabled={loading} onClick={()=>setShowColorPicker(showColorPicker?false:true)} type='button' className='h-10 w-12 rounded-md '
                                                 style={{ backgroundColor: field.value }}
                                             />
+                                            {showColorPicker && <div aria-disabled={loading} className='absolute right-0 top-full z-50 mt-2' >
+                                                <ColorPicker setValue={field.onChange} />
+                                            </div>}
                                         </div>
-                                        {  showColorPicker && <div aria-disabled={loading} className=' transition  flex justify-end' >
-                                            <ColorPicker   setValue={field.onChange} />
-                                        </div>}
                                         <FormMessage />
                                     </FormItem>
                                 )}

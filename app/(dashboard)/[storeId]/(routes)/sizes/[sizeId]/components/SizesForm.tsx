@@ -22,8 +22,8 @@ interface SizeFormProps {
 }
 
 const SizeSchema = z.object({
-    value: z.string().min(1),
-    name: z.string().min(1),
+    value: z.string().min(1,{ message: "Value is required" }),
+    name: z.string().min(1,{ message: "Name is required" }),
 })
 type SizeFormZ = z.infer<typeof SizeSchema>;
 
@@ -121,7 +121,7 @@ export const SizeFormPage: React.FC<SizeFormProps> = ({
                                 control={form.control}
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Name</FormLabel>
+                                        <FormLabel>Name <span className='text-rose-500'>*</span> </FormLabel>
                                         <FormControl>
                                             <Input disabled={loading} {...field} placeholder='Size name' />
                                         </FormControl>
@@ -135,7 +135,7 @@ export const SizeFormPage: React.FC<SizeFormProps> = ({
                                 control={form.control}
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Value</FormLabel>
+                                        <FormLabel>Value <span className='text-rose-500'>*</span> </FormLabel>
                                         <FormControl>
                                             <Input disabled={loading} {...field} placeholder='Size value' />
                                         </FormControl>

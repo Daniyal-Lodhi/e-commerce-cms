@@ -32,7 +32,7 @@ interface ProductFormProps {
 const ProductSchema = z.object({
     name: z.string().min(1, { message: "Name is required" }),
     description: z.string().optional(),
-    price: z.coerce.number().min(1),
+    price: z.coerce.number().min(1, { message: "Price is required" }),
     images: z.object({ imageUrl: z.string() }).array().min(1, { message: "Image is required" }),
     sizeId: z.string().min(1, { message: "Size is required" }),
     categoryId: z.string().min(1, { message: "Category is required" }),
@@ -201,7 +201,7 @@ export const ProductFormPage: React.FC<ProductFormProps> = ({
                             control={form.control}
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Name</FormLabel>
+                                    <FormLabel>Name <span className='text-rose-500'>*</span></FormLabel>
                                     <FormControl>
                                         <Input disabled={loading} {...field} placeholder='Product name' />
                                     </FormControl>
@@ -230,9 +230,18 @@ export const ProductFormPage: React.FC<ProductFormProps> = ({
                             control={form.control}
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Price</FormLabel>
+                                    <FormLabel>Price <span className='text-rose-500'>*</span></FormLabel>
                                     <FormControl>
-                                        <Input type='number' disabled={loading} {...field} placeholder='Price' />
+                                        <Input
+                                            type='number'
+                                            min={0}
+                                            disabled={loading}
+                                            {...field}
+                                            onKeyDown={(event) => {
+                                                if (event.key === '-') event.preventDefault();
+                                            }}
+                                            placeholder='Price'
+                                        />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -251,7 +260,7 @@ export const ProductFormPage: React.FC<ProductFormProps> = ({
                             control={form.control}
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Size</FormLabel>
+                                    <FormLabel>Size <span className='text-rose-500'>*</span></FormLabel>
                                     <Select
                                         disabled={loading}
                                         onValueChange={field.onChange}
@@ -284,7 +293,7 @@ export const ProductFormPage: React.FC<ProductFormProps> = ({
                             control={form.control}
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Color</FormLabel>
+                                    <FormLabel>Color <span className='text-rose-500'>*</span></FormLabel>
                                     <Select
                                         disabled={loading}
                                         onValueChange={field.onChange}
@@ -319,7 +328,7 @@ export const ProductFormPage: React.FC<ProductFormProps> = ({
                             control={form.control}
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Category</FormLabel>
+                                    <FormLabel>Category <span className='text-rose-500'>*</span></FormLabel>
                                     <Select
                                         disabled={loading}
                                         onValueChange={field.onChange}
@@ -359,7 +368,16 @@ export const ProductFormPage: React.FC<ProductFormProps> = ({
                                 <FormItem>
                                     <FormLabel>Qunatity</FormLabel>
                                     <FormControl>
-                                        <Input type='number' disabled={loading} {...field} placeholder='Stock Quantity' />
+                                        <Input
+                                            type='number'
+                                            min={0}
+                                            disabled={loading}
+                                            {...field}
+                                            onKeyDown={(event) => {
+                                                if (event.key === '-') event.preventDefault();
+                                            }}
+                                            placeholder='Stock Quantity'
+                                        />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
